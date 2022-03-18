@@ -1,0 +1,17 @@
+@use "./colors";
+
+  .Toastify__toast {
+    font-size: 17.6px;
+    &--info {
+      background: rgba(colors.getColor("grey"), 0.8) !important;
+    }
+    &--success {
+      background: rgba(colors.getColor("green"), 0.8) !important;
+    }
+    &--warning {
+      background: rgba(colors.getColor("amber"), 0.8) !important;
+    }
+    &--error {
+      background: rgba(colors.getColor("red"), 0.8) !important;
+    }
+  }
