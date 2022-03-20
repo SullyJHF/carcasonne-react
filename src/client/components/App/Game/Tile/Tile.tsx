@@ -1,5 +1,5 @@
-import React from 'react';
-import Draggable from 'react-draggable';
+import React, { useRef } from 'react';
+import Draggable, { DraggableEventHandler } from 'react-draggable';
 import './tile.scss';
 
 interface TileProps {
@@ -7,9 +7,14 @@ interface TileProps {
 }
 
 export const Tile = ({ imageSrc = 'tile-back' }: TileProps) => {
+  const nodeRef = useRef(null);
+  const onDragStop: DraggableEventHandler = (e, data) => {
+    const { x, y } = data;
+    console.log(x, y);
+  };
   return (
-    <Draggable>
-      <div className="tile">
+    <Draggable nodeRef={nodeRef} onStop={onDragStop}>
+      <div className="tile" ref={nodeRef}>
         <img src={`/images/${imageSrc}.png`} alt="a carcasonne tile" draggable={false}/>
       </div>
     </Draggable>
