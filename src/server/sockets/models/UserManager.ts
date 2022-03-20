@@ -24,8 +24,8 @@ class UserManager {
     console.log(this.users);
   }
 
-  userDisconnected(socketId: string): void{
-    this.users[socketId] = false;
+  userDisconnected(socketId: string): void {
+    delete this.users[socketId];
     console.log(`${socketId} disconnected!`);
     console.log('All users');
     console.log(this.users);
