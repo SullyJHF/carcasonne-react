@@ -35,7 +35,7 @@ if (devMode) {
   clientPlugins.push(new webpack.NoEmitOnErrorsPlugin());
   clientPlugins.push(new ReactRefreshWebpackPlugin());
   serverPlugins.push(new NodemonPlugin({
-    watch: ['./dist/server'],
+    watch: ['./dist/server/server.js'],
     ext: 'js',
     script: './dist/server/server.js',
     verbose: true,
