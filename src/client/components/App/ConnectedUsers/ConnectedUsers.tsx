@@ -1,12 +1,12 @@
 import React from 'react';
-import { useUsers } from '../../../Store/UserSlice';
+import { useUserData } from '../../../Store/UserSlice';
 import { useConnectedUsersEffects } from './connectedUsersHooks';
 
 
 
 export const ConnectedUsers = () => {
   useConnectedUsersEffects();
-  const { users } = useUsers();
+  const { users } = useUserData();
   console.log(users);
   return (
     <div id="connected-users">

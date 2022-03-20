@@ -23,6 +23,6 @@ const UserSlice = createSlice({
 
 export const { setUserList } = UserSlice.actions;
 
-export const useUsers = () => useAppSelector((state) => state[STATE_KEY_USERS]);
+export const useUserData = () => useAppSelector((state) => state[STATE_KEY_USERS]);
 
 export default UserSlice.reducer;
