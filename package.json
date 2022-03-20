@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.0",
+    "copy-webpack-plugin": "^10.2.4",
     "express": "^4.17.3",
     "nodemon-webpack-plugin": "^4.7.1",
     "react": "^17.0.2",
