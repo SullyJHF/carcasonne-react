@@ -1,0 +1,10 @@
+@import "../variables";
+
+.tile {
+  width: $tile-size;
+  height: $tile-size;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
