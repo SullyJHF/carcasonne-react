@@ -1,12 +1,12 @@
 import React from 'react';
-import { ProvideSocket } from '../../utils/socket';
+import { ConnectedUsers } from './ConnectedUsers/ConnectedUsers';
 import './reset.css';
-import { SocketTest } from './SocketTest/SocketTest';
+import { ProvideSocket } from './SocketTest/socketHooks';
 
 const App = () => {
   return (
     <ProvideSocket>
-      <SocketTest />
+      <ConnectedUsers />
     </ProvideSocket>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSocket } from '../../../utils/socket';
+import { useSocket } from './socketHooks';
 
 
 export const SocketTest = () => {

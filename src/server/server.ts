@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import devMiddleware from './devMiddleware';
 import prodMiddleware from './prodMiddleware';
-import { initSocketIO } from './sockets';
+import { initSocketIO } from './sockets/sockets';
 
 const PORT = process.env.PORT || 3000;
 

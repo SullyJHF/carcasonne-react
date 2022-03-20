@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import socketIOClient, { Socket } from 'socket.io-client';
+import { USER_EVENTS } from '../../../../socketConstants';
 
 const CONNECTION_EVENTS = {
   CONNECT: 'connect',
@@ -19,7 +20,7 @@ const useSocketConnection = (): Socket | null => {
   // Initialise connect listener
   useEffect(() => {
     if (socket === null) return undefined;
-    socket.on(CONNECTION_EVENTS.CONNECT, () => { console.log('Socket connected!'); });
+    socket.on(CONNECTION_EVENTS.CONNECT, () => { socket.emit(USER_EVENTS.JOIN_GAME); });
     return () => {
       socket.disconnect();
       setSocket(null);
