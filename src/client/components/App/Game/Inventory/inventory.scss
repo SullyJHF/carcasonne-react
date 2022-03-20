@@ -1,0 +1,9 @@
+@import "../../variables";
+@import "../../mixins";
+
+#inventory {
+  @include flex($dir: column, $align: center, $flex: 1);
+  padding: $spacing-normal;
+  height: 100%;
+  background-color: burlywood;
+}

@@ -1,0 +1,6 @@
+@import "../../mixins";
+
+#board {
+  @include flex($flex: 7);
+  height: 100%;
+}
