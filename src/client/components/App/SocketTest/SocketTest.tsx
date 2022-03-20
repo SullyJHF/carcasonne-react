@@ -3,7 +3,7 @@ import { useSocket } from '../../../utils/socket';
 
 
 export const SocketTest = () => {
-  const { socket } = useSocket();
+  const socket = useSocket();
   useEffect(() => {
     if (!socket) return;
     socket.on('test', (data) => {

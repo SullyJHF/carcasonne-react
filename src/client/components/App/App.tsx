@@ -6,7 +6,7 @@ import { SocketTest } from './SocketTest/SocketTest';
 const App = () => {
   return (
     <ProvideSocket>
-      <SocketTest></SocketTest>
+      <SocketTest />
     </ProvideSocket>
   );
 };

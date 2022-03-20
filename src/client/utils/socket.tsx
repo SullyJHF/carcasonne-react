@@ -1,40 +1,36 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import socketIOClient from 'socket.io-client';
+import socketIOClient, { Socket } from 'socket.io-client';
 
-const useSocketConnection = () => {
-  const [socket, setSocket] = useState(null);
+const CONNECTION_EVENTS = {
+  CONNECT: 'connect',
+};
 
+const useSocketConnection = (): Socket | null => {
+  const [socket, setSocket] = useState<null | Socket>(null);
+
+  // Initialise socket on first load
   useEffect(() => {
-    console.log('setting socket!');
     setSocket(socketIOClient('http://localhost:3000', {
       path:'/socket',
-      reconnectionDelay: 1000,
-      reconnection: true,
-      reconnectionAttemps: 10,
       transports: ['websocket'],
-      agent: false,
-      upgrade: false,
-      rejectUnauthorized: false,
     }));
   }, []);
+
+  // Initialise connect listener
   useEffect(() => {
     if (socket === null) return undefined;
-    console.log(socket);
-    socket.on('connect', () => {
-      console.log('Socket connected!');
-    });
-    socket.emit('test', 'hello');
+    socket.on(CONNECTION_EVENTS.CONNECT, () => { console.log('Socket connected!'); });
     return () => {
       socket.disconnect();
       setSocket(null);
     };
   }, [socket]);
-  return { socket };
+  return socket;
 };
 
-const socketContext = createContext();
+const socketContext = createContext<Socket | null>(null);
 
-export const ProvideSocket = ({ children }) => (
+export const ProvideSocket = ({ children }: { children: React.ReactNode }) => (
   <socketContext.Provider value={useSocketConnection()}>{children}</socketContext.Provider>
 );
 
