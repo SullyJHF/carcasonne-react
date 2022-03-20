@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 import { USER_EVENTS } from '../../../../socketConstants';
+import { useAppDispatch } from '../../../Store/hooks';
+import { setUserList } from '../../../Store/UserSlice';
 import { useSocket } from '../SocketTest/socketHooks';
 import { ConnectedUserMap } from './../../../../server/sockets/models/UserManager';
 export const useConnectedUsersEffects = () => {
   const socket = useSocket();
+  const dispatch = useAppDispatch();
   const subscribe = () => {
     console.log('subscribing to events');
     socket?.on(USER_EVENTS.JOIN_GAME, (users: ConnectedUserMap) => {
-      console.log(users);
+      dispatch(setUserList(users));
     });
   };
   const unsubscribe = () => {

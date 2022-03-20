@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './components/App/App';
-import store from './components/App/DataProvider/store';
+import store from './Store/store';
 
 ReactDOM.render(
   <React.StrictMode>
