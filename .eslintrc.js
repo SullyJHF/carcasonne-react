@@ -80,20 +80,9 @@ module.exports = {
         },
       },
     ],
+    '@typescript-eslint/indent': [
+      'error',
+      2,
+    ],
   },
-  'overrides': [
-    {
-      'files': [
-        '**/*.test.js',
-        '**/*.roles.js',
-        '**/*.page.js',
-      ],
-      'rules': {
-        'import/no-extraneous-dependencies': 0,
-        'no-restricted-globals': 0,
-        'class-methods-use-this': 0,
-        '@typescript-eslint/no-unused-expressions': 0,
-      },
-    },
-  ],
 };
