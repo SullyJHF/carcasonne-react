@@ -84,5 +84,8 @@ module.exports = {
       'error',
       2,
     ],
+    '@typescript-eslint/type-annotation-spacing': [
+      'warn',
+    ],
   },
 };
