@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
+import { ConnectedUserMap } from '../../../../server/sockets/models/UserManager';
 import { USER_EVENTS } from '../../../../socketConstants';
 import { useAppDispatch } from '../../../Store/hooks';
 import { setUserList } from '../../../Store/UserSlice';
 import { useSocket } from '../SocketTest/socketHooks';
-import { ConnectedUserMap } from './../../../../server/sockets/models/UserManager';
 export const useConnectedUsersEffects = () => {
   const socket = useSocket();
   const dispatch = useAppDispatch();
