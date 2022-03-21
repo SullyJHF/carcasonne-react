@@ -1,12 +1,12 @@
 import React from 'react';
 import { ConnectedUsers } from '../../ConnectedUsers/ConnectedUsers';
-import { PlaceholderTile } from '../Tile/Placeholder/PlaceholderTile';
+import { Placeholder } from '../Tile/Placeholder/Placeholder';
 import './inventory.scss';
 
 export const Inventory = () => {
   return (
     <div id="inventory">
-      <PlaceholderTile />
+      <Placeholder />
       <ConnectedUsers />
     </div>
   );

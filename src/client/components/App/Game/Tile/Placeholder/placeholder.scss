@@ -1,0 +1,9 @@
+@import "../../../variables";
+
+#placeholder {
+  width: $tile-size;
+  height: $tile-size;
+  .tile {
+    position: absolute;
+  }
+}
