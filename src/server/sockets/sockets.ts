@@ -1,6 +1,7 @@
 import http from 'http';
 import { Server, Socket } from 'socket.io';
 import { SOCKET_EVENTS } from '../../socketConstants';
+import { registerGameHandlers } from './gameHandlers';
 import { registerUserHandlers } from './userHandlers';
 
 let io: Server;
@@ -10,6 +11,7 @@ export const initSocketIO = async (httpServer: http.Server) => {
 
   const onConnection = (socket: Socket) => {
     registerUserHandlers(io, socket);
+    registerGameHandlers(io, socket);
   };
 
   io.on(SOCKET_EVENTS.CONNECTION, onConnection);

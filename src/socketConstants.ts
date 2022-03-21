@@ -6,3 +6,8 @@ export const SOCKET_EVENTS = {
 export const USER_EVENTS = {
   JOIN_GAME: 'user/join',
 };
+
+export const GAME_EVENTS = {
+  TILE_PLACED: 'game/tile_placed',
+  TILES_UPDATED: 'game/tiles_updated',
+};
