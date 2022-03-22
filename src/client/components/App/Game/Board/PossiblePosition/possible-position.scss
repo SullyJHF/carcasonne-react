@@ -1,0 +1,7 @@
+@import "../../../mixins";
+
+.possible-position {
+  @include flex($justify: center, $align: center);
+  background-color: cyan;
+  position: absolute;
+}
