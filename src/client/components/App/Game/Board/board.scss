@@ -3,4 +3,5 @@
 #board {
   @include flex($flex: 7);
   height: 100%;
+  background: rgb(17, 82, 17);
 }
