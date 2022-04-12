@@ -1,6 +1,6 @@
 import http from 'http';
 import { Server, Socket } from 'socket.io';
-import { SOCKET_EVENTS } from '../../socketConstants';
+import { SOCKET_EVENTS } from '../../shared/constants/socketConstants';
 import { registerGameHandlers } from './gameHandlers';
 import { registerUserHandlers } from './userHandlers';
 

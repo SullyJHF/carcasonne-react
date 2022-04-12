@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import socketIOClient, { Socket } from 'socket.io-client';
-import { USER_EVENTS } from '../../../../socketConstants';
+import { USER_EVENTS } from '../../../../shared/constants/socketConstants';
 
 const CONNECTION_EVENTS = {
   CONNECT: 'connect',

@@ -1,5 +1,5 @@
 import { Server, Socket } from 'socket.io';
-import { SOCKET_EVENTS, USER_EVENTS } from '../../socketConstants';
+import { SOCKET_EVENTS, USER_EVENTS } from '../../shared/constants/socketConstants';
 import ConnectedUsers from './models/UserManager';
 import { emit } from './sockets';
 

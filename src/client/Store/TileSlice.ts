@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Socket } from 'socket.io-client';
-import { GAME_EVENTS } from '../../socketConstants';
+import { GAME_EVENTS } from '../../shared/constants/socketConstants';
 import { useAppSelector } from './hooks';
 import { AppDispatch } from './store';
 

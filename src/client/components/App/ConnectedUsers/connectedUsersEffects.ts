@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { ConnectedUserMap } from '../../../../server/sockets/models/UserManager';
-import { USER_EVENTS } from '../../../../socketConstants';
+import { USER_EVENTS } from '../../../../shared/constants/socketConstants';
 import { useAppDispatch } from '../../../Store/hooks';
 import { setUserList } from '../../../Store/UserSlice';
 import { useSocket } from '../SocketTest/socketHooks';
