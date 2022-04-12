@@ -4,10 +4,10 @@ import { useTileData } from '../../../../../Store/TileSlice';
 import './possible-position.scss';
 
 interface PossiblePositionProps {
-  x: number;
-  y: number;
+  boardX: number;
+  boardY: number;
 }
-export const PossiblePosition = ({ x, y }: PossiblePositionProps) => {
+export const PossiblePosition = ({ boardX, boardY }: PossiblePositionProps) => {
   const { dimensions: tileDims } = useTileData();
   const { dimensions: boardDims } = useBoardData();
   return (

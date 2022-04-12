@@ -3,6 +3,7 @@ import { setBoardDimensions, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
 import useDimensions from '../../../../utils/hooks';
 import './board.scss';
+import { useBoardEffects } from './boardEffects';
 import { PossiblePosition } from './PossiblePosition/PossiblePosition';
 
 const setupDimensions = () => {
@@ -20,12 +21,16 @@ const setupDimensions = () => {
 export const Board = () => {
   const boardRef = setupDimensions();
   const { possiblePositions } = useBoardData();
-  console.log(possiblePositions);
+  useBoardEffects();
 
   return (
     <div id="board" ref={boardRef}>
       {possiblePositions.map((position) => (
-        <PossiblePosition key={`${position.x}-${position.y}`} x={position.x} y={position.y} />
+        <PossiblePosition
+          key={`${position.boardX}-${position.boardY}`}
+          boardX={position.boardX}
+          boardY={position.boardY}
+        />
       ))}
     </div>
   );

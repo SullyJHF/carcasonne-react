@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
+import { useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
 import { tilePlaced } from '../../../../Store/TileSlice';
 import { useSocket } from '../../SocketTest/socketHooks';
@@ -18,6 +19,12 @@ export const Tile = ({ imageSrc = 'tile-back', draggable = false }: TileProps) =
     const { x, y } = data;
     dispatch(tilePlaced(socket, x, y));
   };
+  const { possiblePositions } = useBoardData();
+  const onDrag: DraggableEventHandler = (e, data) => {
+    const { x, y } = data;
+    console.log(possiblePositions);
+    console.log(x, y);
+  };
   const tileReturn = (
     <div className="tile" ref={nodeRef}>
       <img src={`/images/${imageSrc}.png`} alt="a carcasonne tile" draggable={false}/>
@@ -25,7 +32,7 @@ export const Tile = ({ imageSrc = 'tile-back', draggable = false }: TileProps) =
   );
   if (draggable) {
     return (
-      <Draggable nodeRef={nodeRef} onStop={onDragStop}>
+      <Draggable nodeRef={nodeRef} onStop={onDragStop} onDrag={onDrag}>
         {tileReturn}
       </Draggable>
     );
