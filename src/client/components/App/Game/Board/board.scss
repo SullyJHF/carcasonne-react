@@ -1,4 +1,4 @@
-@import "../../mixins";
+@import '../../mixins';
 
 #board {
   @include flex($flex: 7);

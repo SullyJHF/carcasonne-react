@@ -18,8 +18,7 @@ export const PossiblePosition = ({ boardX, boardY }: PossiblePositionProps) => {
         top: `${(boardDims.height || 1) / 2 - (tileDims.height || 1) / 2}px`,
         width: tileDims.width,
         height: tileDims.height,
-      }}
-    >
+      }}>
       hello
     </div>
   );

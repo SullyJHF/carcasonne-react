@@ -2,13 +2,26 @@
   "name": "carc-v2",
   "version": "1.0.0",
   "description": "Carcasonne",
+  "author": "Sullivan Ford <sullyjhford@gmail.com>",
+  "license": "ISC",
   "scripts": {
     "start": "NODE_ENV=development webpack --config webpack.config.ts --config-name server --watch",
     "build": "rimraf dist && NODE_ENV=production webpack",
-    "serve": "NODE_ENV=production node dist/server/server.js"
+    "serve": "NODE_ENV=production node dist/server/server.js",
+    "prepare": "husky install"
   },
-  "author": "Sullivan Ford",
-  "license": "ISC",
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 120,
+    "bracketSameLine": true
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --cache --fix",
+    "*.{ts,tsx,css,md}": "prettier --write"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.0",
     "copy-webpack-plugin": "^10.2.4",
@@ -50,7 +63,10 @@
     "eslint-plugin-react": "^7.29.4",
     "fork-ts-checker-webpack-plugin": "^7.2.1",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.2",
     "mini-css-extract-plugin": "^2.6.0",
+    "prettier": "^2.6.2",
     "react-refresh": "^0.11.0",
     "rimraf": "^3.0.2",
     "sass": "^1.49.9",

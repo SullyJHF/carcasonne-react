@@ -1,44 +1,40 @@
 module.exports = {
-  'settings': {
-    'react': {
-      'version': 'detect',
+  settings: {
+    react: {
+      version: 'detect',
     },
     'import/resolver': {
-      'node': {
-        'extensions': ['.js', '.jsx', '.ts', '.tsx'],
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
   },
-  'env': {
-    'browser': true,
-    'es6': true,
-    'node': true,
+  env: {
+    browser: true,
+    es6: true,
+    node: true,
   },
-  'extends': [
+  extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'airbnb-typescript',
     'plugin:@typescript-eslint/recommended',
   ],
-  'globals': {
-    'Atomics': 'readonly',
-    'SharedArrayBuffer': 'readonly',
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
   },
-  'parser': '@typescript-eslint/parser',
-  'parserOptions': {
-    'project': './tsconfig.eslint.json',
-    'ecmaFeatures': {
-      'jsx': true,
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: './tsconfig.eslint.json',
+    ecmaFeatures: {
+      jsx: true,
     },
-    'ecmaVersion': 2020,
-    'sourceType': 'module',
+    ecmaVersion: 2020,
+    sourceType: 'module',
   },
-  'plugins': [
-    'import',
-    'react',
-    '@typescript-eslint',
-  ],
-  'rules': {
+  plugins: ['import', 'react', '@typescript-eslint'],
+  rules: {
     'react/prop-types': 0,
     'no-plusplus': 0,
     'jsx-a11y/click-events-have-key-events': 0,
@@ -61,31 +57,26 @@ module.exports = {
       'error',
       'ignorePackages',
       {
-        'js': 'never',
-        'ts': 'never',
-        'jsx': 'never',
-        'tsx': 'never',
+        js: 'never',
+        ts: 'never',
+        jsx: 'never',
+        tsx: 'never',
       },
     ],
     '@typescript-eslint/member-delimiter-style': [
       'error',
       {
-        'multiline': {
-          'delimiter': 'semi', // 'none' or 'semi' or 'comma'
-          'requireLast': true,
+        multiline: {
+          delimiter: 'semi', // 'none' or 'semi' or 'comma'
+          requireLast: true,
         },
-        'singleline': {
-          'delimiter': 'semi', // 'semi' or 'comma'
-          'requireLast': false,
+        singleline: {
+          delimiter: 'semi', // 'semi' or 'comma'
+          requireLast: false,
         },
       },
     ],
-    '@typescript-eslint/indent': [
-      'error',
-      2,
-    ],
-    '@typescript-eslint/type-annotation-spacing': [
-      'warn',
-    ],
+    '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/type-annotation-spacing': ['warn'],
   },
 };

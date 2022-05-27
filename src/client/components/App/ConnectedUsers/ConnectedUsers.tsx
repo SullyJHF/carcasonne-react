@@ -7,9 +7,11 @@ export const ConnectedUsers = () => {
   const { users } = useUserData();
   return (
     <div id="connected-users">
-      {Object.keys(users).filter((userId) => users[userId]).map((userId) => (
-        <div key={userId}>{userId}</div>
-      ))}
+      {Object.keys(users)
+        .filter((userId) => users[userId])
+        .map((userId) => (
+          <div key={userId}>{userId}</div>
+        ))}
     </div>
   );
 };

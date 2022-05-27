@@ -36,22 +36,17 @@ function getDimensionObject(node: HTMLDivElement): DimensionObject {
   };
 }
 
-const useDimensions = ({
-  liveMeasure = true,
-}: UseDimensionsArgs = {}): UseDimensionsHook => {
+const useDimensions = ({ liveMeasure = true }: UseDimensionsArgs = {}): UseDimensionsHook => {
   const [dimensions, setDimensions] = useState({});
   const [node, setNode] = useState<HTMLDivElement | null>(null);
 
-  const ref = useCallback(n => {
+  const ref = useCallback((n) => {
     setNode(n);
   }, []);
 
   useLayoutEffect(() => {
     if (node) {
-      const measure = () =>
-        window.requestAnimationFrame(() =>
-          setDimensions(getDimensionObject(node)),
-        );
+      const measure = () => window.requestAnimationFrame(() => setDimensions(getDimensionObject(node)));
       measure();
 
       if (liveMeasure) {

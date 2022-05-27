@@ -1,5 +1,5 @@
-@import "../../variables";
-@import "../../mixins";
+@import '../../variables';
+@import '../../mixins';
 
 #inventory {
   @include flex($dir: column, $align: center, $flex: 1);

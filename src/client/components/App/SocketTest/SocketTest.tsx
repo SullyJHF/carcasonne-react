@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSocket } from './socketHooks';
 
-
 export const SocketTest = () => {
   const socket = useSocket();
   useEffect(() => {
@@ -11,9 +10,5 @@ export const SocketTest = () => {
     });
   }, []);
 
-  return (
-    <div>
-      Sockets!
-    </div>
-  );
+  return <div>Sockets!</div>;
 };

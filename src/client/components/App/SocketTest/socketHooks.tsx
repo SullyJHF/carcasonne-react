@@ -11,16 +11,20 @@ const useSocketConnection = (): Socket | null => {
 
   // Initialise socket on first load
   useEffect(() => {
-    setSocket(socketIOClient('http://localhost:3000', {
-      path:'/socket',
-      transports: ['websocket'],
-    }));
+    setSocket(
+      socketIOClient('http://localhost:3000', {
+        path: '/socket',
+        transports: ['websocket'],
+      }),
+    );
   }, []);
 
   // Initialise connect listener
   useEffect(() => {
     if (socket === null) return undefined;
-    socket.on(CONNECTION_EVENTS.CONNECT, () => { socket.emit(USER_EVENTS.JOIN_GAME); });
+    socket.on(CONNECTION_EVENTS.CONNECT, () => {
+      socket.emit(USER_EVENTS.JOIN_GAME);
+    });
     return () => {
       socket.disconnect();
       setSocket(null);

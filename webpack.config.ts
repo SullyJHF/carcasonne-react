@@ -14,9 +14,7 @@ const devMode = process.env.NODE_ENV !== 'production';
 const serverPlugins: WebpackPluginInstance[] = [
   new ForkTsCheckerWebpackPlugin(),
   new CopyPlugin({
-    patterns: [
-      { from: 'src/server/public', to: 'public' },
-    ],
+    patterns: [{ from: 'src/server/public', to: 'public' }],
   }),
 ];
 const clientPlugins: WebpackPluginInstance[] = [
@@ -34,105 +32,100 @@ if (devMode) {
   clientPlugins.push(new webpack.HotModuleReplacementPlugin());
   clientPlugins.push(new webpack.NoEmitOnErrorsPlugin());
   clientPlugins.push(new ReactRefreshWebpackPlugin());
-  serverPlugins.push(new NodemonPlugin({
-    watch: ['./dist/server/server.js'],
-    ext: 'js',
-    script: './dist/server/server.js',
-    verbose: true,
-  }));
+  serverPlugins.push(
+    new NodemonPlugin({
+      watch: ['./dist/server/server.js'],
+      ext: 'js',
+      script: './dist/server/server.js',
+      verbose: true,
+    }),
+  );
 } else {
   clientPlugins.push(new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }));
 }
 
-const webpackOptions: Configuration[] = [{
-  name: 'server',
-  mode: devMode ? 'development' : 'production',
-  entry: './src/server/server.ts',
-  target: 'node',
-  output: {
-    filename: 'server.js',
-    path: path.join(__dirname, '/dist/server/'),
-  },
-  externals: [nodeExternals()],
-  devtool: 'inline-source-map',
-  resolve: {
-    extensions: ['.ts', '.js'],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(ts|js)?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: require.resolve('babel-loader'),
-          options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-typescript',
-            ],
-            plugins: [
-              '@babel/transform-runtime',
-            ],
-          },
-        },
-      },
-      { test: /\.json$/ },
-    ],
-  },
-  plugins: serverPlugins,
-}, {
-  name: 'client',
-  mode: devMode ? 'development' : 'production',
-  entry: clientEntry,
-  output: {
-    path: path.join(__dirname, '/dist/client/'),
-    filename: '[name].[contenthash].js',
-    publicPath: '/js/',
-  },
-  optimization: {
-    runtimeChunk: 'single',
-    splitChunks: {
-      chunks: 'all',
+const webpackOptions: Configuration[] = [
+  {
+    name: 'server',
+    mode: devMode ? 'development' : 'production',
+    entry: './src/server/server.ts',
+    target: 'node',
+    output: {
+      filename: 'server.js',
+      path: path.join(__dirname, '/dist/server/'),
     },
-  },
-  devtool: 'inline-source-map',
-  module: {
-    rules: [
-      {
-        test: /\.(jsx|js|tsx|ts)?$/,
-        exclude: /node_modules/,
-        resolve: {
-          extensions: ['.js', '.jsx', '.tsx', '.ts'],
-        },
-        use: {
-          loader: require.resolve('babel-loader'),
-          options: {
-            presets: [
-              '@babel/preset-react',
-              '@babel/preset-typescript',
-            ],
-            plugins: [
-              devMode && require.resolve('react-refresh/babel'),
-              '@babel/transform-runtime',
-            ].filter(Boolean),
+    externals: [nodeExternals()],
+    devtool: 'inline-source-map',
+    resolve: {
+      extensions: ['.ts', '.js'],
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(ts|js)?$/,
+          exclude: /node_modules/,
+          use: {
+            loader: require.resolve('babel-loader'),
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-typescript'],
+              plugins: ['@babel/transform-runtime'],
+            },
           },
         },
-      },
-      {
-        test: /\.(c|s[ac])ss$/,
-        use: [
-          devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader,
-          'css-loader',
-          {
-            loader: require.resolve('sass-loader'),
-            options: {
-              implementation: sass,
-            },
-          }],
-      },
-    ],
+        { test: /\.json$/ },
+      ],
+    },
+    plugins: serverPlugins,
   },
-  plugins: clientPlugins,
-}];
+  {
+    name: 'client',
+    mode: devMode ? 'development' : 'production',
+    entry: clientEntry,
+    output: {
+      path: path.join(__dirname, '/dist/client/'),
+      filename: '[name].[contenthash].js',
+      publicPath: '/js/',
+    },
+    optimization: {
+      runtimeChunk: 'single',
+      splitChunks: {
+        chunks: 'all',
+      },
+    },
+    devtool: 'inline-source-map',
+    module: {
+      rules: [
+        {
+          test: /\.(jsx|js|tsx|ts)?$/,
+          exclude: /node_modules/,
+          resolve: {
+            extensions: ['.js', '.jsx', '.tsx', '.ts'],
+          },
+          use: {
+            loader: require.resolve('babel-loader'),
+            options: {
+              presets: ['@babel/preset-react', '@babel/preset-typescript'],
+              plugins: [devMode && require.resolve('react-refresh/babel'), '@babel/transform-runtime'].filter(Boolean),
+            },
+          },
+        },
+        {
+          test: /\.(c|s[ac])ss$/,
+          use: [
+            devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: require.resolve('sass-loader'),
+              options: {
+                implementation: sass,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    plugins: clientPlugins,
+  },
+];
 
 export default webpackOptions;

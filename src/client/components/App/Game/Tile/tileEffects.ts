@@ -17,6 +17,8 @@ export const useTileEffects = () => {
   useEffect(() => {
     if (!socket) return;
     subscribe(socket);
-    return () => { unsubscribe(socket); };
+    return () => {
+      unsubscribe(socket);
+    };
   }, [socket]);
 };
