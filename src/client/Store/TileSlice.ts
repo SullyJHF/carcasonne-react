@@ -8,8 +8,10 @@ export interface Tile {
   pieceId: number;
 }
 export interface Dimensions {
-  width?: number;
-  height?: number;
+  xOffset: number;
+  yOffset: number;
+  width: number;
+  height: number;
 }
 interface TileState {
   test: boolean;
@@ -18,7 +20,12 @@ interface TileState {
 
 const initialState: TileState = {
   test: false,
-  dimensions: {},
+  dimensions: {
+    xOffset: 0,
+    yOffset: 0,
+    width: 0,
+    height: 0,
+  },
 };
 
 export const STATE_KEY_TILES = 'tiles';
@@ -26,7 +33,7 @@ const TileSlice = createSlice({
   name: STATE_KEY_TILES,
   initialState,
   reducers: {
-    setTileDimensions: (state, action: PayloadAction<Dimensions>) => {
+    setTileDimensions: (state: TileState, action: PayloadAction<Dimensions>) => {
       state.dimensions = action.payload;
     },
   },

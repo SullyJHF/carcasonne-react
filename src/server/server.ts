@@ -17,4 +17,6 @@ app.use('/images', express.static(path.resolve(__dirname, 'public', 'images')));
 if (process.env.NODE_ENV === 'production') prodMiddleware(app);
 else devMiddleware(app);
 
-httpServer.listen(PORT, () => { console.log(`Listening on port: ${PORT}`); });
+httpServer.listen(PORT, () => {
+  console.log(`Carcasonne now available at http://localhost:${PORT}`);
+});

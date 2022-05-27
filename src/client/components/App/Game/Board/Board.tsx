@@ -10,10 +10,14 @@ const setupDimensions = () => {
   const dispatch = useAppDispatch();
   const [boardRef, dims] = useDimensions();
   useEffect(() => {
-    dispatch(setBoardDimensions({
-      width: dims.width,
-      height: dims.height,
-    }));
+    dispatch(
+      setBoardDimensions({
+        xOffset: dims.x,
+        yOffset: dims.y,
+        width: dims.width,
+        height: dims.height,
+      }),
+    );
   }, [dims]);
   return boardRef;
 };
