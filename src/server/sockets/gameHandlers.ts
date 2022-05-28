@@ -1,12 +1,12 @@
 import { Server, Socket } from 'socket.io';
+import { BoardPosition } from '../../client/Store/BoardSlice';
 import { GAME_EVENTS } from '../../shared/constants/socketConstants';
-import { TilePosition } from '../../shared/types/Tile.types';
 import { broadcast } from './sockets';
 
 export const registerGameHandlers = (io: Server, socket: Socket): void => {
-  const tilePlaced = ({ x, y }: TilePosition) => {
-    console.log(x, y);
-    broadcast(socket, GAME_EVENTS.TILES_UPDATED, { x, y });
+  const tilePlaced = ({ boardX, boardY }: BoardPosition) => {
+    console.log(boardX, boardY);
+    broadcast(socket, GAME_EVENTS.TILES_UPDATED, { boardX, boardY });
   };
 
   socket.on(GAME_EVENTS.TILE_PLACED, tilePlaced);

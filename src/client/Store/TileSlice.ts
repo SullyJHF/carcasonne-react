@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Socket } from 'socket.io-client';
 import { GAME_EVENTS } from '../../shared/constants/socketConstants';
+import { BoardPosition, STATE_KEY_BOARD } from './BoardSlice';
 import { useAppSelector } from './hooks';
-import { AppDispatch } from './store';
+import { DispatchFunc } from './store';
 
-export interface Tile {
+export interface ITile extends BoardPosition {
   pieceId: number;
 }
 export interface Dimensions {
@@ -43,8 +44,15 @@ export const { setTileDimensions } = TileSlice.actions;
 
 export const useTileData = () => useAppSelector((state) => state[STATE_KEY_TILES]);
 
-export const tilePlaced = (socket: Socket | null, x: number, y: number) => (dispatch: AppDispatch) => {
-  socket?.emit(GAME_EVENTS.TILE_PLACED, { x, y });
-};
+export const tilePlaced =
+  (socket: Socket): DispatchFunc =>
+  (dispatch, getState) => {
+    const boardState = getState()[STATE_KEY_BOARD];
+    const { hoveringOver } = boardState;
+    if (hoveringOver) {
+      const { boardX, boardY } = hoveringOver;
+      socket?.emit(GAME_EVENTS.TILE_PLACED, { boardX, boardY });
+    }
+  };
 
 export default TileSlice.reducer;

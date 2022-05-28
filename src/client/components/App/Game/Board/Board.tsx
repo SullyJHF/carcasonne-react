@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { setBoardDimensions, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
 import useDimensions from '../../../../utils/hooks';
+import { PlacedTile } from '../Tile/Tile';
 import './board.scss';
 import { useBoardEffects } from './boardEffects';
 import { PossiblePosition } from './PossiblePosition/PossiblePosition';
@@ -24,11 +25,19 @@ const setupDimensions = () => {
 
 export const Board = () => {
   const boardRef = setupDimensions();
-  const { possiblePositions } = useBoardData();
+  const { possiblePositions, tiles } = useBoardData();
   useBoardEffects();
 
   return (
     <div id="board" ref={boardRef}>
+      {tiles.map((tile) => (
+        <PlacedTile
+          key={`${tile.boardX}-${tile.boardY}`}
+          boardX={tile.boardX}
+          boardY={tile.boardY}
+          pieceId={tile.pieceId}
+        />
+      ))}
       {possiblePositions.map((position) => (
         <PossiblePosition
           key={`${position.boardX}-${position.boardY}`}

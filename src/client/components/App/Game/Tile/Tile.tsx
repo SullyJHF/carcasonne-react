@@ -2,7 +2,8 @@ import React, { useRef } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 import { BoardPosition, setHoveringOver, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
-import { tilePlaced, useTileData } from '../../../../Store/TileSlice';
+import { ITile, tilePlaced, useTileData } from '../../../../Store/TileSlice';
+import { posToStyle } from '../../../../utils/display';
 import { boardToScreenPos, distance, getCentre, intersects } from '../../../../utils/maths';
 import { useSocket } from '../../SocketTest/socketHooks';
 import './tile.scss';
@@ -55,11 +56,8 @@ const useTileDrag = () => {
     // lots of dispatches happening in quick succession atm
     dispatch(setHoveringOver(minPos));
   };
+  const onDragStop: DraggableEventHandler = () => dispatch(tilePlaced(socket));
 
-  const onDragStop: DraggableEventHandler = (e, data) => {
-    const { x, y } = data;
-    dispatch(tilePlaced(socket, x, y));
-  };
   return { onDrag, onDragStop };
 };
 
@@ -81,5 +79,17 @@ export const Tile = ({ imageSrc = 'tile-back', draggable = false }: TileProps) =
     <Draggable nodeRef={nodeRef} onStop={onDragStop} onDrag={onDrag}>
       {TileReturn}
     </Draggable>
+  );
+};
+
+export const PlacedTile = (props: ITile & { key: string }) => {
+  const { dimensions: tileDims } = useTileData();
+  const { dimensions: boardDims } = useBoardData();
+  const pos = boardToScreenPos(props.boardX, props.boardY, tileDims, boardDims);
+  const style = posToStyle(pos);
+  return (
+    <div className="tile" style={style}>
+      <img src={`/images/1.png`} alt="a carcasonne tile" draggable={false} />
+    </div>
   );
 };
