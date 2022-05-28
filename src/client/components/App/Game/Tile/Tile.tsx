@@ -3,7 +3,7 @@ import Draggable, { DraggableEventHandler } from 'react-draggable';
 import { setHoveringOver, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
 import { tilePlaced, useTileData } from '../../../../Store/TileSlice';
-import { intersects } from '../../../../utils/maths';
+import { boardToScreenPos, intersects } from '../../../../utils/maths';
 import { useSocket } from '../../SocketTest/socketHooks';
 import './tile.scss';
 
@@ -15,24 +15,19 @@ interface TileProps {
 const useTileDrag = () => {
   const socket = useSocket();
   const dispatch = useAppDispatch();
-  const { possiblePositions } = useBoardData();
+  const { dimensions: boardDims, possiblePositions } = useBoardData();
   const { dimensions: tileDims } = useTileData();
   const onDrag: DraggableEventHandler = (e, data) => {
-    const { x, y } = data;
+    const { x: dragX, y: dragY } = data;
+    /**
+     * TODO: put current drag over into an object here
+     * Then check which one is closest after the loop
+     */
     for (const position of possiblePositions) {
-      if (
-        intersects(
-          x + tileDims.xOffset,
-          y + tileDims.yOffset,
-          tileDims.width,
-          tileDims.height,
-          position.x,
-          position.y,
-          position.width,
-          position.height,
-        )
-      ) {
+      const { x, y, w, h } = boardToScreenPos(position.boardX, position.boardY, tileDims, boardDims);
+      if (intersects(dragX + tileDims.xOffset, dragY + tileDims.yOffset, tileDims.width, tileDims.height, x, y, w, h)) {
         dispatch(setHoveringOver({ boardX: position.boardX, boardY: position.boardY }));
+        break;
       } else {
         dispatch(setHoveringOver(null));
       }

@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { boardToScreenPos } from '../utils/maths';
+import { setDebugTilePosition } from './DebugSlice';
 import { useAppSelector } from './hooks';
 import { AppDispatch, RootState } from './store';
 import { Dimensions, Tile } from './TileSlice';
@@ -10,14 +12,14 @@ export interface BoardPosition {
 interface BoardTilePosition {
   x: number;
   y: number;
-  width: number;
-  height: number;
+  w: number;
+  h: number;
 }
 
 interface BoardState {
   dimensions: Dimensions;
   tiles: Tile[];
-  possiblePositions: (BoardTilePosition & BoardPosition)[];
+  possiblePositions: BoardPosition[];
   hoveringOver: BoardPosition;
 }
 
@@ -41,7 +43,7 @@ const BoardSlice = createSlice({
     setBoardDimensions: (state, action: PayloadAction<Dimensions>) => {
       state.dimensions = action.payload;
     },
-    setPossiblePositions: (state, action: PayloadAction<(BoardTilePosition & BoardPosition)[]>) => {
+    setPossiblePositions: (state, action: PayloadAction<BoardPosition[]>) => {
       state.possiblePositions = action.payload;
     },
     setHoveringOver: (state, action: PayloadAction<BoardPosition>) => {
@@ -56,23 +58,15 @@ export const useBoardData = () => useAppSelector((state) => state[STATE_KEY_BOAR
 
 export const calculatePossiblePositions =
   (tileDims: Dimensions, boardDims: Dimensions) => (dispatch: AppDispatch, getState: () => RootState) => {
-    console.log(boardDims.xOffset);
-    const x = (boardDims.width || 1) / 2 - (tileDims.width || 1) / 2 + boardDims.xOffset;
-    const y = (boardDims.height || 1) / 2 - (tileDims.height || 1) / 2;
-    const width = tileDims.width;
-    const height = tileDims.height;
+    const debug = boardToScreenPos(1, 0, tileDims, boardDims);
     dispatch(
       setPossiblePositions([
-        {
-          boardX: 0,
-          boardY: 0,
-          x,
-          y,
-          width,
-          height,
-        },
+        { boardX: 0, boardY: 0 },
+        { boardX: 0, boardY: 1 },
+        { boardX: 1, boardY: 1 },
       ]),
     );
+    dispatch(setDebugTilePosition({ x: debug.x, y: debug.y }));
   };
 
 export default BoardSlice.reducer;
