@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 import { useBoardData } from '../../../../Store/BoardSlice';
+import { setDebugTilePosition } from '../../../../Store/DebugSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
 import { tilePlaced, useTileData } from '../../../../Store/TileSlice';
 import { intersects } from '../../../../utils/maths';
@@ -12,14 +13,9 @@ interface TileProps {
   draggable?: boolean;
 }
 
-export const Tile = ({ imageSrc = 'tile-back', draggable = false }: TileProps) => {
-  const dispatch = useAppDispatch();
+const useTileDrag = () => {
   const socket = useSocket();
-  const nodeRef = useRef(null);
-  const onDragStop: DraggableEventHandler = (e, data) => {
-    const { x, y } = data;
-    dispatch(tilePlaced(socket, x, y));
-  };
+  const dispatch = useAppDispatch();
   const { possiblePositions } = useBoardData();
   const { dimensions: tileDims } = useTileData();
   const onDrag: DraggableEventHandler = (e, data) => {
@@ -38,20 +34,35 @@ export const Tile = ({ imageSrc = 'tile-back', draggable = false }: TileProps) =
         )
       ) {
         console.log('Intersection!!', x, y);
+        dispatch(setDebugTilePosition({ x: position.x, y: position.y }));
       }
     }
   };
-  const tileReturn = (
+
+  const onDragStop: DraggableEventHandler = (e, data) => {
+    const { x, y } = data;
+    dispatch(tilePlaced(socket, x, y));
+  };
+  return { onDrag, onDragStop };
+};
+
+export const Tile = ({ imageSrc = 'tile-back', draggable = false }: TileProps) => {
+  const nodeRef = useRef(null);
+  const { onDrag, onDragStop } = useTileDrag();
+
+  // Using a standard variable here instead of a wrapped custom StaticTile component
+  // because of the props needed to be passed: https://github.com/react-grid-layout/react-draggable#draggable-api
+  const TileReturn = (
     <div className="tile" ref={nodeRef}>
       <img src={`/images/${imageSrc}.png`} alt="a carcasonne tile" draggable={false} />
     </div>
   );
-  if (draggable) {
-    return (
-      <Draggable nodeRef={nodeRef} onStop={onDragStop} onDrag={onDrag}>
-        {tileReturn}
-      </Draggable>
-    );
-  }
-  return tileReturn;
+
+  if (!draggable) return TileReturn;
+
+  return (
+    <Draggable nodeRef={nodeRef} onStop={onDragStop} onDrag={onDrag}>
+      {TileReturn}
+    </Draggable>
+  );
 };
