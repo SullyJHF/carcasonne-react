@@ -29,3 +29,7 @@ export const boardToScreenPos = (boardX: number, boardY: number, tileDims: Dimen
   const h = tileDims.height;
   return { x, y, w, h };
 };
+
+export const getCentre = (x, y, w, h) => ({ x: x + w / 2, y: y + h / 2 });
+
+export const distance = (x1, y1, x2, y2) => Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));

@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
-import { setHoveringOver, useBoardData } from '../../../../Store/BoardSlice';
+import { BoardPosition, setHoveringOver, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
 import { tilePlaced, useTileData } from '../../../../Store/TileSlice';
-import { boardToScreenPos, intersects } from '../../../../utils/maths';
+import { boardToScreenPos, distance, getCentre, intersects } from '../../../../utils/maths';
 import { useSocket } from '../../SocketTest/socketHooks';
 import './tile.scss';
 
@@ -19,19 +19,41 @@ const useTileDrag = () => {
   const { dimensions: tileDims } = useTileData();
   const onDrag: DraggableEventHandler = (e, data) => {
     const { x: dragX, y: dragY } = data;
-    /**
-     * TODO: put current drag over into an object here
-     * Then check which one is closest after the loop
-     */
+    const tileX = dragX + tileDims.xOffset;
+    const tileY = dragY + tileDims.yOffset;
+    const hoveringPositions: BoardPosition[] = [];
     for (const position of possiblePositions) {
       const { x, y, w, h } = boardToScreenPos(position.boardX, position.boardY, tileDims, boardDims);
-      if (intersects(dragX + tileDims.xOffset, dragY + tileDims.yOffset, tileDims.width, tileDims.height, x, y, w, h)) {
-        dispatch(setHoveringOver({ boardX: position.boardX, boardY: position.boardY }));
-        break;
-      } else {
-        dispatch(setHoveringOver(null));
+      if (intersects(tileX, tileY, tileDims.width, tileDims.height, x, y, w, h)) {
+        hoveringPositions.push(position);
       }
     }
+    if (!hoveringPositions.length) {
+      dispatch(setHoveringOver(null));
+      return;
+    }
+
+    if (hoveringPositions.length === 1) {
+      dispatch(setHoveringOver(hoveringPositions[0]));
+      return;
+    }
+
+    // Get closest hover
+    const { x: tileCentreX, y: tileCentreY } = getCentre(tileX, tileY, tileDims.width, tileDims.height);
+    let minDist = Number.MAX_SAFE_INTEGER;
+    let minPos: BoardPosition = null;
+    for (const position of hoveringPositions) {
+      const { x, y } = boardToScreenPos(position.boardX, position.boardY, tileDims, boardDims);
+      const { x: posCentreX, y: posCentreY } = getCentre(x, y, tileDims.width, tileDims.height);
+      const dist = distance(tileCentreX, tileCentreY, posCentreX, posCentreY);
+      if (dist < minDist) {
+        minDist = dist;
+        minPos = position;
+      }
+    }
+    // TODO: maybe don't do this every single drag event
+    // lots of dispatches happening in quick succession atm
+    dispatch(setHoveringOver(minPos));
   };
 
   const onDragStop: DraggableEventHandler = (e, data) => {
