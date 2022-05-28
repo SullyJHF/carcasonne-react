@@ -19,6 +19,7 @@ module.exports = {
     'plugin:react/recommended',
     'airbnb-typescript',
     'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   globals: {
     Atomics: 'readonly',
@@ -76,7 +77,6 @@ module.exports = {
         },
       },
     ],
-    '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/type-annotation-spacing': ['warn'],
   },
 };
