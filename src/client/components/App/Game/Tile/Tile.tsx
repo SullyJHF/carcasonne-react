@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
-import { useBoardData } from '../../../../Store/BoardSlice';
-import { setDebugTilePosition } from '../../../../Store/DebugSlice';
+import { setHoveringOver, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
 import { tilePlaced, useTileData } from '../../../../Store/TileSlice';
 import { intersects } from '../../../../utils/maths';
@@ -33,8 +32,9 @@ const useTileDrag = () => {
           position.height,
         )
       ) {
-        console.log('Intersection!!', x, y);
-        dispatch(setDebugTilePosition({ x: position.x, y: position.y }));
+        dispatch(setHoveringOver({ boardX: position.boardX, boardY: position.boardY }));
+      } else {
+        dispatch(setHoveringOver(null));
       }
     }
   };

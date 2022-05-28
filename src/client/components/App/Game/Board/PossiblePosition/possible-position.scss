@@ -1,7 +1,11 @@
-@import '../../../mixins';
+@import "../../../mixins";
 
 .possible-position {
   @include flex($justify: center, $align: center);
   background-color: cyan;
   position: absolute;
+  opacity: 0.6;
+  &.hovering {
+    opacity: 1;
+  }
 }

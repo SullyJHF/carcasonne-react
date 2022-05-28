@@ -3,9 +3,11 @@ import { useAppSelector } from './hooks';
 import { AppDispatch, RootState } from './store';
 import { Dimensions, Tile } from './TileSlice';
 
-interface BoardTilePosition {
+export interface BoardPosition {
   boardX: number;
   boardY: number;
+}
+interface BoardTilePosition {
   x: number;
   y: number;
   width: number;
@@ -15,7 +17,8 @@ interface BoardTilePosition {
 interface BoardState {
   dimensions: Dimensions;
   tiles: Tile[];
-  possiblePositions: BoardTilePosition[];
+  possiblePositions: (BoardTilePosition & BoardPosition)[];
+  hoveringOver: BoardPosition;
 }
 
 const initialState: BoardState = {
@@ -27,6 +30,7 @@ const initialState: BoardState = {
   },
   tiles: [],
   possiblePositions: [],
+  hoveringOver: null,
 };
 
 export const STATE_KEY_BOARD = 'board';
@@ -37,13 +41,16 @@ const BoardSlice = createSlice({
     setBoardDimensions: (state, action: PayloadAction<Dimensions>) => {
       state.dimensions = action.payload;
     },
-    setPossiblePositions: (state, action: PayloadAction<BoardTilePosition[]>) => {
+    setPossiblePositions: (state, action: PayloadAction<(BoardTilePosition & BoardPosition)[]>) => {
       state.possiblePositions = action.payload;
+    },
+    setHoveringOver: (state, action: PayloadAction<BoardPosition>) => {
+      state.hoveringOver = action.payload;
     },
   },
 });
 
-export const { setBoardDimensions, setPossiblePositions } = BoardSlice.actions;
+export const { setBoardDimensions, setPossiblePositions, setHoveringOver } = BoardSlice.actions;
 
 export const useBoardData = () => useAppSelector((state) => state[STATE_KEY_BOARD]);
 

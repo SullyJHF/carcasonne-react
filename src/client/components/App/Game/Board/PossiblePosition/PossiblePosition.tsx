@@ -1,24 +1,21 @@
 import React from 'react';
-import { useBoardData } from '../../../../../Store/BoardSlice';
+import { BoardPosition, useBoardData } from '../../../../../Store/BoardSlice';
 import { useTileData } from '../../../../../Store/TileSlice';
 import './possible-position.scss';
 
-interface PossiblePositionProps {
-  boardX: number;
-  boardY: number;
-}
-export const PossiblePosition = ({ boardX, boardY }: PossiblePositionProps) => {
+export const PossiblePosition = ({ boardX, boardY }: BoardPosition) => {
   const { dimensions: tileDims } = useTileData();
-  const { dimensions: boardDims } = useBoardData();
+  const { dimensions: boardDims, hoveringOver } = useBoardData();
+  const hovering = hoveringOver && hoveringOver.boardX === boardX && hoveringOver.boardY === boardY;
+  const className = `possible-position ${hovering ? 'hovering' : ''}`;
+  const styleObj = {
+    left: `${(boardDims.width || 1) / 2 - (tileDims.width || 1) / 2}px`,
+    top: `${(boardDims.height || 1) / 2 - (tileDims.height || 1) / 2}px`,
+    width: tileDims.width,
+    height: tileDims.height,
+  };
   return (
-    <div
-      className="possible-position"
-      style={{
-        left: `${(boardDims.width || 1) / 2 - (tileDims.width || 1) / 2}px`,
-        top: `${(boardDims.height || 1) / 2 - (tileDims.height || 1) / 2}px`,
-        width: tileDims.width,
-        height: tileDims.height,
-      }}>
+    <div className={className} style={styleObj}>
       hello
     </div>
   );
