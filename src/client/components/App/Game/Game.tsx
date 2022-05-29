@@ -1,12 +1,12 @@
 import React from 'react';
 import { Board } from './Board/Board';
 import './game.scss';
+import { useGameEffects } from './gameEffects';
 import { Inventory } from './Inventory/Inventory';
 import { DebugTile } from './Tile/DebugTile/DebugTile';
-import { useTileEffects } from './Tile/tileEffects';
 
 export const Game = () => {
-  useTileEffects();
+  useGameEffects();
   return (
     <div id="game">
       <Inventory />

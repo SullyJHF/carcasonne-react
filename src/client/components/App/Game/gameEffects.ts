@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { Socket } from 'socket.io-client';
-import { Game } from '../../../../../server/sockets/models/Game';
-import { GAME_EVENTS } from '../../../../../shared/constants/socketConstants';
-import { BoardPosition, tilesUpdated } from '../../../../Store/BoardSlice';
-import { gameStateUpdated } from '../../../../Store/GameSlice';
-import { useAppDispatch } from '../../../../Store/hooks';
-import { useSocket } from '../../SocketTest/socketHooks';
+import { Game } from '../../../../server/sockets/models/Game';
+import { GAME_EVENTS } from '../../../../shared/constants/socketConstants';
+import { BoardPosition, tilesUpdated } from '../../../Store/BoardSlice';
+import { gameStateUpdated } from '../../../Store/GameSlice';
+import { useAppDispatch } from '../../../Store/hooks';
+import { useSocket } from '../SocketTest/socketHooks';
 
-export const useTileEffects = () => {
+export const useGameEffects = () => {
   const dispatch = useAppDispatch();
   const socket = useSocket();
   const subscribe = (_socket: Socket) => {
