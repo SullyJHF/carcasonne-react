@@ -52,6 +52,7 @@ export const useTileData = () => useAppSelector((state) => state[STATE_KEY_TILES
 export const tilePlaced =
   (socket: Socket): DispatchFunc =>
   (dispatch, getState) => {
+    dispatch(setCurrentTile(null));
     const boardState = getState()[STATE_KEY_BOARD];
     const { hoveringOver } = boardState;
     if (hoveringOver) {
