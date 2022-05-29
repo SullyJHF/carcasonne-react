@@ -1,20 +1,26 @@
 import { randomUUID } from 'crypto';
 import { BoardPosition } from '../../../client/Store/BoardSlice';
 import { ITile } from '../../../client/Store/TileSlice';
+import { InitialAvailableTiles } from '../../../shared/constants/AvailableTiles';
 import UserManager, { ConnectedUserMap } from './UserManager';
 
 export class Game {
   id: string;
-  possiblePositions: BoardPosition[];
   players: ConnectedUserMap;
+
   tiles: ITile[];
+  availableTiles: number[];
+  currentTile: number;
+
+  possiblePositions: BoardPosition[];
 
   constructor() {
     this.id = randomUUID();
     this.possiblePositions = this.initialisePossiblePositions();
     this.players = UserManager.getUsers();
     this.tiles = [];
-    console.log(`Game created: ${this.id}`);
+    this.availableTiles = InitialAvailableTiles;
+    this.currentTile = this.getRandomTile();
   }
 
   getGameData() {
@@ -29,8 +35,25 @@ export class Game {
     ];
   }
 
-  addTile(tile: BoardPosition) {
-    const pieceId = 1; // currentPieceId
-    this.tiles.push({ ...tile, pieceId });
+  private addTile(tile: BoardPosition) {
+    this.tiles.push({ ...tile, tileId: this.currentTile });
   }
+
+  getRandomTile(): number {
+    if (!this.availableTiles.length) {
+      console.log('No tiles left!');
+      return -1;
+    }
+
+    const randIndex = Math.floor(Math.random() * this.availableTiles.length);
+    const [tileId] = this.availableTiles.splice(randIndex, 1);
+    return tileId;
+  }
+
+  // #region Socket handlers
+  onTilePlaced(tile: BoardPosition) {
+    this.addTile(tile);
+    this.currentTile = this.getRandomTile();
+  }
+  // #endregion
 }

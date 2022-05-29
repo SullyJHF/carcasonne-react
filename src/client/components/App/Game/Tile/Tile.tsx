@@ -9,7 +9,7 @@ import { useSocket } from '../../SocketTest/socketHooks';
 import './tile.scss';
 
 interface TileProps {
-  imageSrc: string;
+  tileId: number;
   draggable?: boolean;
 }
 
@@ -61,7 +61,9 @@ const useTileDrag = () => {
   return { onDrag, onDragStop };
 };
 
-export const Tile = ({ imageSrc = 'tile-back', draggable = false }: TileProps) => {
+const getTileImageSrc = (tileId: number) => `/images/${tileId >= 0 && tileId <= 24 ? tileId : 'tile-back'}.png`;
+
+export const Tile = ({ tileId = -1, draggable = false }: TileProps) => {
   const nodeRef = useRef(null);
   const { onDrag, onDragStop } = useTileDrag();
 
@@ -69,7 +71,7 @@ export const Tile = ({ imageSrc = 'tile-back', draggable = false }: TileProps) =
   // because of the props needed to be passed: https://github.com/react-grid-layout/react-draggable#draggable-api
   const TileReturn = (
     <div className="tile" ref={nodeRef}>
-      <img src={`/images/${imageSrc}.png`} alt="a carcasonne tile" draggable={false} />
+      <img src={getTileImageSrc(tileId)} alt="a carcasonne tile" draggable={false} />
     </div>
   );
 
@@ -89,7 +91,7 @@ export const PlacedTile = (props: ITile & { key: string }) => {
   const style = posToStyle(pos);
   return (
     <div className="tile" style={style}>
-      <img src={`/images/1.png`} alt="a carcasonne tile" draggable={false} />
+      <img src={getTileImageSrc(props.tileId)} alt="a carcasonne tile" draggable={false} />
     </div>
   );
 };

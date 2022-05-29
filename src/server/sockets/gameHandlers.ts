@@ -6,7 +6,7 @@ import { emit } from './sockets';
 
 export const registerGameHandlers = (io: Server, socket: Socket): void => {
   const tilePlaced = ({ boardX, boardY }: BoardPosition) => {
-    GameManager.getGame('test').addTile({ boardX, boardY });
+    GameManager.getGame('test').onTilePlaced({ boardX, boardY });
     console.log(`Tile placed! (${boardX}, ${boardY})`);
     emit(GAME_EVENTS.STATE_UPDATE, GameManager.getGame('test'));
   };

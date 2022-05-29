@@ -35,7 +35,7 @@ export const Board = () => {
           key={`${tile.boardX}-${tile.boardY}`}
           boardX={tile.boardX}
           boardY={tile.boardY}
-          pieceId={tile.pieceId}
+          tileId={tile.tileId}
         />
       ))}
       {possiblePositions.map((position) => (

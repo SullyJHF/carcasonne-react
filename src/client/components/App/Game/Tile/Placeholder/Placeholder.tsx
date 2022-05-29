@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { setDebugTilePosition } from '../../../../../Store/DebugSlice';
 import { useAppDispatch } from '../../../../../Store/hooks';
-import { setTileDimensions } from '../../../../../Store/TileSlice';
+import { setTileDimensions, useTileData } from '../../../../../Store/TileSlice';
 import useDimensions from '../../../../../utils/hooks';
 import { Tile } from '../Tile';
 import './placeholder.scss';
 
 export const Placeholder = () => {
+  const { currentTile } = useTileData();
   const dispatch = useAppDispatch();
   const [ref, dims] = useDimensions();
   useEffect(() => {
@@ -29,8 +30,8 @@ export const Placeholder = () => {
   }, [dims]);
   return (
     <div id="placeholder" ref={ref}>
-      <Tile imageSrc="tile-back" />
-      <Tile imageSrc="1" draggable />
+      <Tile tileId={-1} />
+      {currentTile && <Tile tileId={currentTile} draggable />}
     </div>
   );
 };

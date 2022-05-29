@@ -6,7 +6,7 @@ import { useAppSelector } from './hooks';
 import { DispatchFunc } from './store';
 
 export interface ITile extends BoardPosition {
-  pieceId: number;
+  tileId: number;
 }
 export interface Dimensions {
   xOffset: number;
@@ -17,6 +17,7 @@ export interface Dimensions {
 interface TileState {
   test: boolean;
   dimensions: Dimensions;
+  currentTile: number;
 }
 
 const initialState: TileState = {
@@ -27,6 +28,7 @@ const initialState: TileState = {
     width: 0,
     height: 0,
   },
+  currentTile: null,
 };
 
 export const STATE_KEY_TILES = 'tiles';
@@ -37,10 +39,13 @@ const TileSlice = createSlice({
     setTileDimensions: (state: TileState, action: PayloadAction<Dimensions>) => {
       state.dimensions = action.payload;
     },
+    setCurrentTile: (state: TileState, action: PayloadAction<number>) => {
+      state.currentTile = action.payload;
+    },
   },
 });
 
-export const { setTileDimensions } = TileSlice.actions;
+export const { setTileDimensions, setCurrentTile } = TileSlice.actions;
 
 export const useTileData = () => useAppSelector((state) => state[STATE_KEY_TILES]);
 
