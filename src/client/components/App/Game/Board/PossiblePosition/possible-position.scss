@@ -4,7 +4,10 @@
   @include flex($justify: center, $align: center);
   background-color: cyan;
   position: absolute;
-  opacity: 0.6;
+  opacity: 0.1;
+  &.dragging {
+    opacity: 0.222;
+  }
   &.hovering {
     opacity: 1;
   }

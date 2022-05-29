@@ -15,6 +15,7 @@ interface BoardState {
   tiles: ITile[];
   possiblePositions: BoardPosition[];
   hoveringOver: BoardPosition;
+  isDragging: boolean;
 }
 
 const initialState: BoardState = {
@@ -27,6 +28,7 @@ const initialState: BoardState = {
   tiles: [],
   possiblePositions: [],
   hoveringOver: null,
+  isDragging: false,
 };
 
 export const STATE_KEY_BOARD = 'board';
@@ -40,6 +42,9 @@ const BoardSlice = createSlice({
     setPossiblePositions: (state: BoardState, action: PayloadAction<BoardPosition[]>) => {
       state.possiblePositions = action.payload;
     },
+    setIsDragging: (state: BoardState, action: PayloadAction<boolean>) => {
+      state.isDragging = action.payload;
+    },
     setTiles: (state: BoardState, action: PayloadAction<ITile[]>) => {
       state.tiles = action.payload;
     },
@@ -49,7 +54,8 @@ const BoardSlice = createSlice({
   },
 });
 
-export const { setBoardDimensions, setPossiblePositions, setHoveringOver, setTiles } = BoardSlice.actions;
+export const { setBoardDimensions, setPossiblePositions, setHoveringOver, setTiles, setIsDragging } =
+  BoardSlice.actions;
 
 export const useBoardData = () => useAppSelector((state) => state[STATE_KEY_BOARD]);
 

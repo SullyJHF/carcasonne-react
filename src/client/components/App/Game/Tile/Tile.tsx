@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
-import { BoardPosition, setHoveringOver, useBoardData } from '../../../../Store/BoardSlice';
+import { BoardPosition, setHoveringOver, setIsDragging, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
 import { ITile, tilePlaced, useTileData } from '../../../../Store/TileSlice';
 import { posToStyle } from '../../../../utils/display';
@@ -56,16 +56,22 @@ const useTileDrag = () => {
     // lots of dispatches happening in quick succession atm
     dispatch(setHoveringOver(minPos));
   };
-  const onDragStop: DraggableEventHandler = () => dispatch(tilePlaced(socket));
+  const onDragStart: DraggableEventHandler = () => {
+    dispatch(setIsDragging(true));
+  };
+  const onDragStop: DraggableEventHandler = () => {
+    dispatch(setIsDragging(false));
+    dispatch(tilePlaced(socket));
+  };
 
-  return { onDrag, onDragStop };
+  return { onDrag, onDragStart, onDragStop };
 };
 
 const getTileImageSrc = (tileId: number) => `/images/${tileId >= 0 && tileId <= 24 ? tileId : 'tile-back'}.png`;
 
 export const Tile = ({ tileId = -1, draggable = false }: TileProps) => {
   const nodeRef = useRef(null);
-  const { onDrag, onDragStop } = useTileDrag();
+  const { onDrag, onDragStart, onDragStop } = useTileDrag();
 
   // Using a standard variable here instead of a wrapped custom StaticTile component
   // because of the props needed to be passed: https://github.com/react-grid-layout/react-draggable#draggable-api
@@ -78,7 +84,7 @@ export const Tile = ({ tileId = -1, draggable = false }: TileProps) => {
   if (!draggable) return TileReturn;
 
   return (
-    <Draggable nodeRef={nodeRef} onStop={onDragStop} onDrag={onDrag}>
+    <Draggable nodeRef={nodeRef} onStart={onDragStart} onStop={onDragStop} onDrag={onDrag}>
       {TileReturn}
     </Draggable>
   );
@@ -90,7 +96,7 @@ export const PlacedTile = (props: ITile & { key: string }) => {
   const pos = boardToScreenPos(props.boardX, props.boardY, tileDims, boardDims);
   const style = posToStyle(pos);
   return (
-    <div className="tile" style={style}>
+    <div className="tile placed" style={style}>
       <img src={getTileImageSrc(props.tileId)} alt="a carcasonne tile" draggable={false} />
     </div>
   );

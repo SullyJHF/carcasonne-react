@@ -7,14 +7,10 @@ import './possible-position.scss';
 
 export const PossiblePosition = ({ boardX, boardY }: BoardPosition & { key: string }) => {
   const { dimensions: tileDims } = useTileData();
-  const { dimensions: boardDims, hoveringOver } = useBoardData();
+  const { dimensions: boardDims, hoveringOver, isDragging } = useBoardData();
   const hovering = hoveringOver && hoveringOver.boardX === boardX && hoveringOver.boardY === boardY;
-  const className = `possible-position ${hovering ? 'hovering' : ''}`;
+  const className = `possible-position ${hovering ? 'hovering' : ''} ${isDragging ? 'dragging' : ''}`;
   const pos = boardToScreenPos(boardX, boardY, tileDims, boardDims);
   const styleObj = posToStyle(pos);
-  return (
-    <div className={className} style={styleObj}>
-      hello
-    </div>
-  );
+  return <div className={className} style={styleObj} />;
 };
