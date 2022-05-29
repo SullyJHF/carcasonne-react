@@ -15,6 +15,7 @@ export const useGameEffects = () => {
       dispatch(tilesUpdated(position));
     });
     _socket.on(GAME_EVENTS.STATE_UPDATE, (gameState: Game) => {
+      console.log(gameState);
       dispatch(gameStateUpdated(gameState));
     });
   };

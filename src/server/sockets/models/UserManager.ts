@@ -3,8 +3,7 @@ export interface ConnectedUserMap {
 }
 
 class UserManager {
-  static instance: UserManager | null = null;
-
+  static instance: UserManager;
   users: ConnectedUserMap;
 
   constructor() {
@@ -12,7 +11,7 @@ class UserManager {
   }
 
   static getInstance(): UserManager {
-    if (this.instance === null) this.instance = new UserManager();
+    if (!this.instance) this.instance = new UserManager();
     return this.instance;
   }
 
@@ -28,6 +27,10 @@ class UserManager {
     console.log(`${socketId} disconnected!`);
     console.log('All users');
     console.log(this.users);
+  }
+
+  getUsers() {
+    return this.users;
   }
 }
 
