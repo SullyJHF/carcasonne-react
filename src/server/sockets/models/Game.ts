@@ -16,23 +16,39 @@ export class Game {
 
   constructor() {
     this.id = randomUUID();
-    this.possiblePositions = this.initialisePossiblePositions();
     this.players = UserManager.getUsers();
-    this.tiles = [];
     this.availableTiles = InitialAvailableTiles;
+    this.tiles = [];
     this.currentTile = this.getRandomTile();
+    this.possiblePositions = this.calculatePossiblePositions();
   }
 
   getGameData() {
     return this;
   }
 
-  private initialisePossiblePositions(): BoardPosition[] {
-    return [
-      { boardX: 0, boardY: 0 },
-      { boardX: 1, boardY: 3 },
-      { boardX: 3, boardY: 2 },
-    ];
+  private calculatePossiblePositions(): BoardPosition[] {
+    if (!this.tiles.length) return [{ boardX: 0, boardY: 0 }];
+    const potentialPlaces = [];
+    for (const tile of this.tiles) {
+      const { boardX, boardY } = tile;
+      const tempPlaces = [
+        { boardX, boardY: boardY + 1 },
+        { boardX: boardX + 1, boardY },
+        { boardX, boardY: boardY - 1 },
+        { boardX: boardX - 1, boardY },
+      ];
+      potentialPlaces.push(...tempPlaces);
+    }
+    const placesNotOnTiles = potentialPlaces.reduce((acc, cur) => {
+      const placedTile = this.tiles.find((tile) => tile.boardX === cur.boardX && tile.boardY === cur.boardY);
+      const placedPlace = acc.find((place) => place.boardX === cur.boardX && place.boardY === cur.boardY);
+      if (!placedTile && !placedPlace) {
+        acc.push(cur);
+      }
+      return acc;
+    }, []);
+    return placesNotOnTiles;
   }
 
   private addTile(tile: BoardPosition) {
@@ -54,6 +70,7 @@ export class Game {
   onTilePlaced(tile: BoardPosition) {
     this.addTile(tile);
     this.currentTile = this.getRandomTile();
+    this.possiblePositions = this.calculatePossiblePositions();
   }
   // #endregion
 }
