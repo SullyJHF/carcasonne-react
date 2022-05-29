@@ -10,4 +10,6 @@ export const USER_EVENTS = {
 export const GAME_EVENTS = {
   TILE_PLACED: 'game/tile_placed',
   TILES_UPDATED: 'game/tiles_updated',
+
+  STATE_UPDATE: 'game/state_update',
 };

@@ -78,5 +78,6 @@ module.exports = {
       },
     ],
     '@typescript-eslint/type-annotation-spacing': ['warn'],
+    '@typescript-eslint/lines-between-class-members': 0,
   },
 };

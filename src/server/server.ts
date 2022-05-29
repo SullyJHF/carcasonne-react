@@ -3,6 +3,7 @@ import http from 'http';
 import path from 'path';
 import devMiddleware from './devMiddleware';
 import prodMiddleware from './prodMiddleware';
+import GameManager from './sockets/models/GameManager';
 import { initSocketIO } from './sockets/sockets';
 
 const PORT = process.env.PORT || 3000;
@@ -19,4 +20,5 @@ else devMiddleware(app);
 
 httpServer.listen(PORT, () => {
   console.log(`Carcasonne now available at http://localhost:${PORT}`);
+  GameManager.createGame();
 });

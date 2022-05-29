@@ -65,13 +65,6 @@ export const useBoardData = () => useAppSelector((state) => state[STATE_KEY_BOAR
 export const calculatePossiblePositions =
   (tileDims: Dimensions, boardDims: Dimensions) => (dispatch: AppDispatch, getState: () => RootState) => {
     const debug = boardToScreenPos(1, 0, tileDims, boardDims);
-    dispatch(
-      setPossiblePositions([
-        { boardX: 0, boardY: 0 },
-        { boardX: 0, boardY: 1 },
-        { boardX: 1, boardY: 1 },
-      ]),
-    );
     dispatch(setDebugTilePosition({ x: debug.x, y: debug.y }));
   };
 
