@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 import { BoardPosition } from '../../../client/Store/BoardSlice';
-import { ITile } from '../../../client/Store/TileSlice';
+import { ITile, ORIENTATION } from '../../../client/Store/TileSlice';
 import { InitialAvailableTiles } from '../../../shared/constants/AvailableTiles';
 import UserManager, { ConnectedUserMap } from './UserManager';
 
@@ -52,7 +52,7 @@ export class Game {
   }
 
   private addTile(tile: BoardPosition) {
-    this.tiles.push({ ...tile, tileId: this.currentTile });
+    this.tiles.push({ ...tile, orientation: ORIENTATION.EAST, tileId: this.currentTile });
   }
 
   getRandomTile(): number {

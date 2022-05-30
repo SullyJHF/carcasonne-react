@@ -36,6 +36,7 @@ export const Board = () => {
           boardX={tile.boardX}
           boardY={tile.boardY}
           tileId={tile.tileId}
+          orientation={tile.orientation}
         />
       ))}
       {possiblePositions.map((position) => (

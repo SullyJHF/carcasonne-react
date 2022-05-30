@@ -5,8 +5,15 @@ import { BoardPosition, STATE_KEY_BOARD } from './BoardSlice';
 import { useAppSelector } from './hooks';
 import { DispatchFunc } from './store';
 
+export enum ORIENTATION {
+  NORTH = 0,
+  EAST = 1,
+  SOUTH = 2,
+  WEST = 3,
+}
 export interface ITile extends BoardPosition {
   tileId: number;
+  orientation: ORIENTATION;
 }
 export interface Dimensions {
   xOffset: number;

@@ -94,7 +94,7 @@ export const PlacedTile = (props: ITile & { key: string }) => {
   const { dimensions: tileDims } = useTileData();
   const { dimensions: boardDims } = useBoardData();
   const pos = boardToScreenPos(props.boardX, props.boardY, tileDims, boardDims);
-  const style = posToStyle(pos);
+  const style = posToStyle(pos, props.orientation);
   return (
     <div className="tile placed" style={style}>
       <img src={getTileImageSrc(props.tileId)} alt="a carcasonne tile" draggable={false} />
