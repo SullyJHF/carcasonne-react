@@ -17,7 +17,13 @@ export const registerGameHandlers = (io: Server, socket: Socket): void => {
     GameManager.getGame('test').onReorientTile(orientation);
     broadcast(socket, GAME_EVENTS.REORIENT_TILE, orientation);
   };
+  const confirmOrientation = (orientation: ORIENTATION) => {
+    console.log(`Tile reorientation confirmed: ${orientation}`);
+    GameManager.getGame('test').onConfirmOrientation(orientation);
+    emit(GAME_EVENTS.STATE_UPDATE, GameManager.getGame('test'));
+  };
 
   socket.on(GAME_EVENTS.TILE_PLACED, tilePlaced);
   socket.on(GAME_EVENTS.REORIENT_TILE, reorientTile);
+  socket.on(GAME_EVENTS.CONFIRM_ORIENTATION, confirmOrientation);
 };

@@ -90,4 +90,16 @@ export const rotateOrientingTile =
     socket?.emit(GAME_EVENTS.REORIENT_TILE, nextOrientation);
   };
 
+export const confirmOrientation =
+  (socket: Socket): DispatchFunc =>
+  (dispatch, getState) => {
+    const currentOrientingTile = getState()[STATE_KEY_TILES].currentOrientingTile;
+    socket?.emit(GAME_EVENTS.CONFIRM_ORIENTATION, currentOrientingTile.orientation);
+    // const l = Object.keys(ORIENTATION).length / 2; // for some reason length has to be divided by 2 - https://stackoverflow.com/questions/38034673/determine-the-number-of-enum-elements-typescript
+    // const curI = currentOrientingTile.orientation;
+    // const nextOrientation = clockwise ? (curI + 1) % l : (l + ((curI - 1) % l)) % l;
+    // dispatch(setCurrentOrientingTile({ ...currentOrientingTile, orientation: nextOrientation }));
+    // socket?.emit(GAME_EVENTS.REORIENT_TILE, nextOrientation);
+  };
+
 export default TileSlice.reducer;

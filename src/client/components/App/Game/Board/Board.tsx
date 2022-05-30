@@ -32,14 +32,6 @@ export const Board = () => {
 
   return (
     <div id="board" ref={boardRef}>
-      {currentOrientingTile && (
-        <OrientingTile
-          boardX={currentOrientingTile.boardX}
-          boardY={currentOrientingTile.boardY}
-          tileId={currentOrientingTile.tileId}
-          orientation={currentOrientingTile.orientation}
-        />
-      )}
       {tiles.map((tile) => (
         <PlacedTile
           key={`${tile.boardX}-${tile.boardY}`}
@@ -49,6 +41,14 @@ export const Board = () => {
           orientation={tile.orientation}
         />
       ))}
+      {currentOrientingTile && (
+        <OrientingTile
+          boardX={currentOrientingTile.boardX}
+          boardY={currentOrientingTile.boardY}
+          tileId={currentOrientingTile.tileId}
+          orientation={currentOrientingTile.orientation}
+        />
+      )}
       {possiblePositions.map((position) => (
         <PossiblePosition
           key={`${position.boardX}-${position.boardY}`}

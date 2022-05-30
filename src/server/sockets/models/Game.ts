@@ -52,10 +52,14 @@ export class Game {
     return placesNotOnTiles;
   }
 
-  private addTile(tile: BoardPosition) {
+  private startOrientingTile(tile: BoardPosition) {
     const newTile = { ...tile, orientation: ORIENTATION.NORTH, tileId: this.currentTile };
     this.currentOrientingTile = newTile;
     // this.tiles.push(newTile);
+  }
+
+  private addTile(tile: ITile) {
+    this.tiles.push(tile);
   }
 
   getRandomTile(): number {
@@ -71,13 +75,21 @@ export class Game {
 
   // #region Socket handlers
   onTilePlaced(tile: BoardPosition) {
-    this.addTile(tile);
+    this.startOrientingTile(tile);
     this.currentTile = null; //this.getRandomTile();
     this.possiblePositions = []; //this.calculatePossiblePositions();
   }
 
   onReorientTile(orientation: ORIENTATION) {
     this.currentOrientingTile.orientation = orientation;
+  }
+
+  onConfirmOrientation(orientation: ORIENTATION) {
+    this.onReorientTile(orientation);
+    this.addTile(this.currentOrientingTile);
+    this.currentOrientingTile = null;
+    this.currentTile = this.getRandomTile();
+    this.possiblePositions = this.calculatePossiblePositions();
   }
   // #endregion
 }

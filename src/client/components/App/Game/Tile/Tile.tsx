@@ -1,9 +1,11 @@
+import ClearIcon from '@mui/icons-material/Clear';
+import DoneIcon from '@mui/icons-material/Done';
 import RedoIcon from '@mui/icons-material/Redo';
 import React, { useRef } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 import { BoardPosition, setHoveringOver, setIsDragging, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
-import { ITile, rotateOrientingTile, tilePlaced, useTileData } from '../../../../Store/TileSlice';
+import { confirmOrientation, ITile, rotateOrientingTile, tilePlaced, useTileData } from '../../../../Store/TileSlice';
 import { orientationToStyle, posToStyle } from '../../../../utils/display';
 import { boardToScreenPos, distance, getCentre, intersects } from '../../../../utils/maths';
 import { useSocket } from '../../SocketTest/socketHooks';
@@ -115,12 +117,22 @@ export const OrientingTile = (props: ITile) => {
   return (
     <div className="tile placed orienting" style={style}>
       <div className="controls">
-        <button className="rotate-btn left" onClick={() => dispatch(rotateOrientingTile(socket, false))}>
-          <RedoIcon />
-        </button>
-        <button className="rotate-btn right" onClick={() => dispatch(rotateOrientingTile(socket, true))}>
-          <RedoIcon />
-        </button>
+        <div className="row">
+          <button className="btn rotate left" onClick={() => dispatch(rotateOrientingTile(socket, false))}>
+            <RedoIcon />
+          </button>
+          <button className="btn rotate right" onClick={() => dispatch(rotateOrientingTile(socket, true))}>
+            <RedoIcon />
+          </button>
+        </div>
+        <div className="row">
+          <button className="btn" onClick={() => {}}>
+            <ClearIcon />
+          </button>
+          <button className="btn" onClick={() => dispatch(confirmOrientation(socket))}>
+            <DoneIcon />
+          </button>
+        </div>
       </div>
       <img src={getTileImageSrc(props.tileId)} alt="a carcasonne tile" draggable={false} style={orientationStyle} />
     </div>

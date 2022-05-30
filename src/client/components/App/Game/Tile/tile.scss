@@ -17,19 +17,28 @@
     z-index: 3;
     position: absolute;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 125%;
     left: -12.5%;
-    top: -$spacing-small;
-    .rotate-btn {
-      border-radius: 100%;
-      padding: $spacing-xxsmall;
-      border: none;
+    top: -12.5%;
+    height: 125%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: space-between;
+    .row {
       display: flex;
-      transform: rotate(45deg);
-      &.left {
-        transform: rotate(-45deg) rotateY(180deg);
+      justify-content: space-between;
+      align-items: center;
+      .btn {
+        border-radius: 100%;
+        padding: $spacing-xxsmall;
+        border: none;
+        display: flex;
+      }
+      .rotate {
+        transform: rotate(45deg);
+        &.left {
+          transform: rotate(-45deg) rotateY(180deg);
+        }
       }
     }
   }

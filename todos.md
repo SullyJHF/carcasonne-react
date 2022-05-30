@@ -1,5 +1,7 @@
 - [ ] Pre-placing tiles
-  - [ ] Pause while choosing rotation before actually "placing" the tile
+  - [x] ~~_Pause while choosing rotation before actually "placing" the tile_~~ [2022-05-30]
+  - [x] ~~_Submit button to place_~~ [2022-05-30]
+  - [ ] Cancel button to cancel placement
 - [ ] Rotations
   - [ ] Data setup for all tile rotations
   - [ ] Calculating possible rotations on the server
