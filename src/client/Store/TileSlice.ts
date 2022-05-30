@@ -54,10 +54,13 @@ const TileSlice = createSlice({
     setCurrentOrientingTile: (state: TileState, action: PayloadAction<ITile>) => {
       state.currentOrientingTile = action.payload;
     },
+    updateOrientation: (state: TileState, action: PayloadAction<ORIENTATION>) => {
+      state.currentOrientingTile.orientation = action.payload;
+    },
   },
 });
 
-export const { setTileDimensions, setCurrentTile, setCurrentOrientingTile } = TileSlice.actions;
+export const { setTileDimensions, setCurrentTile, setCurrentOrientingTile, updateOrientation } = TileSlice.actions;
 
 export const useTileData = () => useAppSelector((state) => state[STATE_KEY_TILES]);
 

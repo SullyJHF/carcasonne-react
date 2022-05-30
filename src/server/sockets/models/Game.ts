@@ -75,5 +75,9 @@ export class Game {
     this.currentTile = null; //this.getRandomTile();
     this.possiblePositions = []; //this.calculatePossiblePositions();
   }
+
+  onReorientTile(orientation: ORIENTATION) {
+    this.currentOrientingTile.orientation = orientation;
+  }
   // #endregion
 }

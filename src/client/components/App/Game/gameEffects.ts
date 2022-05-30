@@ -5,6 +5,7 @@ import { GAME_EVENTS } from '../../../../shared/constants/socketConstants';
 import { gameStateUpdated } from '../../../Store/GameSlice';
 import { useAppDispatch } from '../../../Store/hooks';
 import { useSocket } from '../SocketTest/socketHooks';
+import { ORIENTATION, updateOrientation } from './../../../Store/TileSlice';
 
 export const useGameEffects = () => {
   const dispatch = useAppDispatch();
@@ -14,9 +15,14 @@ export const useGameEffects = () => {
       console.log(gameState);
       dispatch(gameStateUpdated(gameState));
     });
+    _socket.on(GAME_EVENTS.REORIENT_TILE, (orientation: ORIENTATION) => {
+      console.log('Reorientation received', orientation);
+      dispatch(updateOrientation(orientation));
+    });
   };
   const unsubscribe = (_socket: Socket) => {
     _socket.off(GAME_EVENTS.STATE_UPDATE);
+    _socket.off(GAME_EVENTS.REORIENT_TILE);
   };
 
   useEffect(() => {
