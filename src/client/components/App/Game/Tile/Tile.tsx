@@ -1,9 +1,10 @@
+import RedoIcon from '@mui/icons-material/Redo';
 import React, { useRef } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 import { BoardPosition, setHoveringOver, setIsDragging, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
-import { ITile, tilePlaced, useTileData } from '../../../../Store/TileSlice';
-import { posToStyle } from '../../../../utils/display';
+import { ITile, rotateOrientingTile, tilePlaced, useTileData } from '../../../../Store/TileSlice';
+import { orientationToStyle, posToStyle } from '../../../../utils/display';
 import { boardToScreenPos, distance, getCentre, intersects } from '../../../../utils/maths';
 import { useSocket } from '../../SocketTest/socketHooks';
 import './tile.scss';
@@ -94,10 +95,34 @@ export const PlacedTile = (props: ITile & { key: string }) => {
   const { dimensions: tileDims } = useTileData();
   const { dimensions: boardDims } = useBoardData();
   const pos = boardToScreenPos(props.boardX, props.boardY, tileDims, boardDims);
-  const style = posToStyle(pos, props.orientation);
+  const style = posToStyle(pos);
+  const orientationStyle = orientationToStyle(props.orientation);
   return (
     <div className="tile placed" style={style}>
-      <img src={getTileImageSrc(props.tileId)} alt="a carcasonne tile" draggable={false} />
+      <img src={getTileImageSrc(props.tileId)} alt="a carcasonne tile" draggable={false} style={orientationStyle} />
+    </div>
+  );
+};
+
+export const OrientingTile = (props: ITile) => {
+  const dispatch = useAppDispatch();
+  const socket = useSocket();
+  const { dimensions: tileDims } = useTileData();
+  const { dimensions: boardDims } = useBoardData();
+  const pos = boardToScreenPos(props.boardX, props.boardY, tileDims, boardDims);
+  const style = posToStyle(pos);
+  const orientationStyle = orientationToStyle(props.orientation);
+  return (
+    <div className="tile placed orienting" style={style}>
+      <div className="controls">
+        <button className="rotate-btn left" onClick={() => dispatch(rotateOrientingTile(socket, false))}>
+          <RedoIcon />
+        </button>
+        <button className="rotate-btn right" onClick={() => dispatch(rotateOrientingTile(socket, true))}>
+          <RedoIcon />
+        </button>
+      </div>
+      <img src={getTileImageSrc(props.tileId)} alt="a carcasonne tile" draggable={false} style={orientationStyle} />
     </div>
   );
 };

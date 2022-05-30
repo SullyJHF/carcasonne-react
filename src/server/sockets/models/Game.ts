@@ -11,6 +11,7 @@ export class Game {
   tiles: ITile[];
   availableTiles: number[];
   currentTile: number;
+  currentOrientingTile: ITile;
 
   possiblePositions: BoardPosition[];
 
@@ -52,7 +53,9 @@ export class Game {
   }
 
   private addTile(tile: BoardPosition) {
-    this.tiles.push({ ...tile, orientation: ORIENTATION.EAST, tileId: this.currentTile });
+    const newTile = { ...tile, orientation: ORIENTATION.NORTH, tileId: this.currentTile };
+    this.currentOrientingTile = newTile;
+    // this.tiles.push(newTile);
   }
 
   getRandomTile(): number {
@@ -69,8 +72,8 @@ export class Game {
   // #region Socket handlers
   onTilePlaced(tile: BoardPosition) {
     this.addTile(tile);
-    this.currentTile = this.getRandomTile();
-    this.possiblePositions = this.calculatePossiblePositions();
+    this.currentTile = null; //this.getRandomTile();
+    this.possiblePositions = []; //this.calculatePossiblePositions();
   }
   // #endregion
 }

@@ -5,6 +5,7 @@
   "author": "Sullivan Ford <sullyjhford@gmail.com>",
   "license": "ISC",
   "scripts": {
+    "preinstall": "nvm use",
     "start": "NODE_ENV=development webpack --config webpack.config.ts --config-name server --watch",
     "build": "rimraf dist && NODE_ENV=production webpack",
     "serve": "NODE_ENV=production node dist/server/server.js",
@@ -23,6 +24,10 @@
     "*.{ts,tsx,css,md}": "prettier --write"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.8.0",
+    "@mui/material": "^5.8.1",
     "@reduxjs/toolkit": "^1.8.0",
     "copy-webpack-plugin": "^10.2.4",
     "express": "^4.17.3",

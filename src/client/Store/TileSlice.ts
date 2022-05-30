@@ -25,6 +25,7 @@ interface TileState {
   test: boolean;
   dimensions: Dimensions;
   currentTile: number;
+  currentOrientingTile: ITile;
 }
 
 const initialState: TileState = {
@@ -36,6 +37,7 @@ const initialState: TileState = {
     height: 0,
   },
   currentTile: null,
+  currentOrientingTile: null,
 };
 
 export const STATE_KEY_TILES = 'tiles';
@@ -49,10 +51,13 @@ const TileSlice = createSlice({
     setCurrentTile: (state: TileState, action: PayloadAction<number>) => {
       state.currentTile = action.payload;
     },
+    setCurrentOrientingTile: (state: TileState, action: PayloadAction<ITile>) => {
+      state.currentOrientingTile = action.payload;
+    },
   },
 });
 
-export const { setTileDimensions, setCurrentTile } = TileSlice.actions;
+export const { setTileDimensions, setCurrentTile, setCurrentOrientingTile } = TileSlice.actions;
 
 export const useTileData = () => useAppSelector((state) => state[STATE_KEY_TILES]);
 
@@ -69,6 +74,17 @@ export const tilePlaced =
     } else {
       dispatch(setCurrentTile(oldCurrentTile));
     }
+  };
+
+export const rotateOrientingTile =
+  (socket: Socket, clockwise: boolean): DispatchFunc =>
+  (dispatch, getState) => {
+    const currentOrientingTile = getState()[STATE_KEY_TILES].currentOrientingTile;
+    const l = Object.keys(ORIENTATION).length / 2; // for some reason length has to be divided by 2 - https://stackoverflow.com/questions/38034673/determine-the-number-of-enum-elements-typescript
+    const curI = currentOrientingTile.orientation;
+    const nextOrientation = clockwise ? (curI + 1) % l : (l + ((curI - 1) % l)) % l;
+    dispatch(setCurrentOrientingTile({ ...currentOrientingTile, orientation: nextOrientation }));
+    socket?.emit(GAME_EVENTS.REORIENT_TILE, nextOrientation);
   };
 
 export default TileSlice.reducer;

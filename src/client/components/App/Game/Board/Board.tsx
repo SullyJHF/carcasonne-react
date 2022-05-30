@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { setBoardDimensions, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
+import { useTileData } from '../../../../Store/TileSlice';
 import useDimensions from '../../../../utils/hooks';
-import { PlacedTile } from '../Tile/Tile';
+import { OrientingTile, PlacedTile } from '../Tile/Tile';
 import './board.scss';
 import { useBoardEffects } from './boardEffects';
 import { PossiblePosition } from './PossiblePosition/PossiblePosition';
@@ -26,10 +27,19 @@ const setupDimensions = () => {
 export const Board = () => {
   const boardRef = setupDimensions();
   const { possiblePositions, tiles } = useBoardData();
+  const { currentOrientingTile } = useTileData();
   useBoardEffects();
 
   return (
     <div id="board" ref={boardRef}>
+      {currentOrientingTile && (
+        <OrientingTile
+          boardX={currentOrientingTile.boardX}
+          boardY={currentOrientingTile.boardY}
+          tileId={currentOrientingTile.tileId}
+          orientation={currentOrientingTile.orientation}
+        />
+      )}
       {tiles.map((tile) => (
         <PlacedTile
           key={`${tile.boardX}-${tile.boardY}`}
