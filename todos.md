@@ -1,10 +1,11 @@
 - [ ] Pre-placing tiles
   - [x] ~~_Pause while choosing rotation before actually "placing" the tile_~~ [2022-05-30]
   - [x] ~~_Submit button to place_~~ [2022-05-30]
-  - [ ] Cancel button to cancel placement
+  - [x] ~~_Cancel button to cancel placement_~~ [2022-05-31]
+  - [ ] Drag to cancel and re-place?
 - [ ] Rotations
   - [ ] Data setup for all tile rotations
-  - [ ] Calculating possible rotations on the server
+  - [ ] Calculating possible rotations/positions on the server
 - [ ] Player turns
   - [ ] Only allowing current player to place
   - [ ] Auto rotating through players
