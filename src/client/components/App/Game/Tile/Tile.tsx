@@ -5,7 +5,14 @@ import React, { useRef } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 import { BoardPosition, setHoveringOver, setIsDragging, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
-import { confirmOrientation, ITile, rotateOrientingTile, tilePlaced, useTileData } from '../../../../Store/TileSlice';
+import {
+  cancelTilePlacement,
+  confirmOrientation,
+  ITile,
+  rotateOrientingTile,
+  tilePlaced,
+  useTileData,
+} from '../../../../Store/TileSlice';
 import { orientationToStyle, posToStyle } from '../../../../utils/display';
 import { boardToScreenPos, distance, getCentre, intersects } from '../../../../utils/maths';
 import { useSocket } from '../../SocketTest/socketHooks';
@@ -126,7 +133,7 @@ export const OrientingTile = (props: ITile) => {
           </button>
         </div>
         <div className="row">
-          <button className="btn" onClick={() => {}}>
+          <button className="btn" onClick={() => dispatch(cancelTilePlacement(socket))}>
             <ClearIcon />
           </button>
           <button className="btn" onClick={() => dispatch(confirmOrientation(socket))}>

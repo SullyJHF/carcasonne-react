@@ -91,5 +91,11 @@ export class Game {
     this.currentTile = this.getRandomTile();
     this.possiblePositions = this.calculatePossiblePositions();
   }
+
+  onCancelPlacement() {
+    this.currentTile = this.currentOrientingTile.tileId;
+    this.currentOrientingTile = null;
+    this.possiblePositions = this.calculatePossiblePositions();
+  }
   // #endregion
 }
