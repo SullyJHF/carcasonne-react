@@ -12,5 +12,9 @@ export const PossiblePosition = ({ boardX, boardY }: BoardPosition & { key: stri
   const className = `possible-position ${hovering ? 'hovering' : ''} ${isDragging ? 'dragging' : ''}`;
   const pos = boardToScreenPos(boardX, boardY, tileDims, boardDims);
   const styleObj = posToStyle(pos);
-  return <div className={className} style={styleObj} />;
+  return (
+    <div className={className} style={styleObj}>
+      ({boardX},{boardY})
+    </div>
+  );
 };

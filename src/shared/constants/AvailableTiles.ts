@@ -25,3 +25,40 @@ export const InitialAvailableTiles = [
   23, 23, 23, 23,
   24,
 ];
+
+export enum TileEdges {
+  FIELD = 0,
+  ROAD = 1,
+  CITY = 2,
+}
+
+export type TileEdgeMap = [TileEdges, TileEdges, TileEdges, TileEdges];
+// top, right, bottom, left
+export const TileRotationTypeMap: {
+  [id: number]: TileEdgeMap;
+} = {
+  1: [TileEdges.FIELD, TileEdges.FIELD, TileEdges.FIELD, TileEdges.FIELD],
+  2: [TileEdges.FIELD, TileEdges.FIELD, TileEdges.ROAD, TileEdges.FIELD],
+  3: [TileEdges.CITY, TileEdges.CITY, TileEdges.CITY, TileEdges.CITY],
+  4: [TileEdges.CITY, TileEdges.CITY, TileEdges.FIELD, TileEdges.CITY],
+  5: [TileEdges.CITY, TileEdges.CITY, TileEdges.FIELD, TileEdges.CITY],
+  6: [TileEdges.CITY, TileEdges.CITY, TileEdges.ROAD, TileEdges.CITY],
+  7: [TileEdges.CITY, TileEdges.CITY, TileEdges.ROAD, TileEdges.CITY],
+  8: [TileEdges.CITY, TileEdges.FIELD, TileEdges.FIELD, TileEdges.CITY],
+  9: [TileEdges.CITY, TileEdges.FIELD, TileEdges.FIELD, TileEdges.CITY],
+  10: [TileEdges.CITY, TileEdges.ROAD, TileEdges.ROAD, TileEdges.CITY],
+  11: [TileEdges.CITY, TileEdges.ROAD, TileEdges.ROAD, TileEdges.CITY],
+  12: [TileEdges.FIELD, TileEdges.CITY, TileEdges.FIELD, TileEdges.CITY],
+  13: [TileEdges.FIELD, TileEdges.CITY, TileEdges.FIELD, TileEdges.CITY],
+  14: [TileEdges.CITY, TileEdges.FIELD, TileEdges.FIELD, TileEdges.CITY],
+  15: [TileEdges.CITY, TileEdges.FIELD, TileEdges.CITY, TileEdges.FIELD],
+  16: [TileEdges.CITY, TileEdges.FIELD, TileEdges.FIELD, TileEdges.FIELD],
+  17: [TileEdges.CITY, TileEdges.FIELD, TileEdges.ROAD, TileEdges.ROAD],
+  18: [TileEdges.CITY, TileEdges.ROAD, TileEdges.ROAD, TileEdges.FIELD],
+  19: [TileEdges.CITY, TileEdges.ROAD, TileEdges.ROAD, TileEdges.ROAD],
+  20: [TileEdges.CITY, TileEdges.ROAD, TileEdges.FIELD, TileEdges.ROAD],
+  21: [TileEdges.ROAD, TileEdges.FIELD, TileEdges.ROAD, TileEdges.FIELD],
+  22: [TileEdges.FIELD, TileEdges.FIELD, TileEdges.ROAD, TileEdges.ROAD],
+  23: [TileEdges.FIELD, TileEdges.ROAD, TileEdges.ROAD, TileEdges.ROAD],
+  24: [TileEdges.ROAD, TileEdges.ROAD, TileEdges.ROAD, TileEdges.ROAD],
+};

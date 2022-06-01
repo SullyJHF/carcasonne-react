@@ -3,7 +3,11 @@ import { boardToScreenPos } from '../utils/maths';
 import { setDebugTilePosition } from './DebugSlice';
 import { useAppSelector } from './hooks';
 import { AppDispatch, RootState } from './store';
-import { Dimensions, ITile } from './TileSlice';
+import { Dimensions, ITile, ORIENTATION } from './TileSlice';
+
+export interface PossiblePosition extends BoardPosition {
+  possibleOrientations?: ORIENTATION[];
+}
 
 export interface BoardPosition {
   boardX: number;
@@ -13,7 +17,7 @@ export interface BoardPosition {
 interface BoardState {
   dimensions: Dimensions;
   tiles: ITile[];
-  possiblePositions: BoardPosition[];
+  possiblePositions: PossiblePosition[];
   hoveringOver: BoardPosition;
   isDragging: boolean;
 }
@@ -39,7 +43,7 @@ const BoardSlice = createSlice({
     setBoardDimensions: (state: BoardState, action: PayloadAction<Dimensions>) => {
       state.dimensions = action.payload;
     },
-    setPossiblePositions: (state: BoardState, action: PayloadAction<BoardPosition[]>) => {
+    setPossiblePositions: (state: BoardState, action: PayloadAction<PossiblePosition[]>) => {
       state.possiblePositions = action.payload;
     },
     setIsDragging: (state: BoardState, action: PayloadAction<boolean>) => {
