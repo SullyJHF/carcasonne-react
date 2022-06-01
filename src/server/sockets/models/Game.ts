@@ -73,15 +73,11 @@ export class Game {
       const placeableOrientations: ORIENTATION[] = [];
       for (let i = 0; i < 4; i++) {
         const checkThisOrientation = Game.getOrientedTileRotation(this.currentTile, i);
-        // console.log(`Checking orientation ${i}`);
-        // console.log(checkThisOrientation);
         let canPlaceThisRotation = true;
         for (const [index, tile] of adjTiles.entries()) {
           // index here is the same as ORIENTATIONS = [NORTH, EAST, SOUTH, WEST]
           if (!tile) continue;
           const adjTileRotation = Game.getOrientedTileRotation(tile.tileId, tile.orientation);
-          // console.log(`Checking whether tile ${this.currentTile} in orientation ${i}`);
-          // console.log(`Can be placed ${index} of ${tile.tileId} which has orientation ${tile.orientation}`);
           const canPlaceHere = Game.canTileBePlaced(checkThisOrientation, adjTileRotation, index);
 
           canPlaceThisRotation = canPlaceThisRotation && canPlaceHere;
@@ -95,34 +91,14 @@ export class Game {
     }
 
     return finalPlaces;
-
-    /**
-     *  const finalPlaces = [];
-        for (const place of placesNotOnTiles) {
-          const placeableRotations = [];
-          for (const [i, rotation] of currentTile.rotations.entries()) {
-            let canPlaceThisRotation = true;
-            for (const [index, tile] of adjTiles.entries()) {
-              if (tile === undefined) continue;
-              const tileIndex = (index + 2) % 4;
-              canPlaceThisRotation &= tile.rotations[tile.rotationIndex][tileIndex] === rotation[index];
-            }
-            if (canPlaceThisRotation) {
-              placeableRotations.push(i);
-            }
-          }
-          place.placeableRotations = placeableRotations;
-          if (placeableRotations.length > 0) {
-            dispatch(getNextPlaceId());
-            const { placeId: nextPlaceId } = getState()[STATE_BOARD];
-            finalPlaces.push({ id: nextPlaceId, ...place });
-          }
-        }
-     */
   }
 
   private getTile(boardX: number, boardY: number) {
     return this.tiles.find((tile) => tile.boardX === boardX && tile.boardY === boardY);
+  }
+
+  private getPossiblePosition(boardX: number, boardY: number) {
+    return this.possiblePositions.find((position) => position.boardX === boardX && position.boardY === boardY);
   }
 
   private getAdjacentTiles(position: BoardPosition) {
@@ -135,9 +111,14 @@ export class Game {
   }
 
   private startOrientingTile(tile: BoardPosition) {
-    const newTile = { ...tile, orientation: ORIENTATION.NORTH, tileId: this.currentTile };
+    const position = this.getPossiblePosition(tile.boardX, tile.boardY);
+    const newTile = {
+      ...tile,
+      orientation: position.possibleOrientations[0],
+      tileId: this.currentTile,
+      possibleOrientations: position.possibleOrientations,
+    };
     this.currentOrientingTile = newTile;
-    // this.tiles.push(newTile);
   }
 
   private addTile(tile: ITile) {

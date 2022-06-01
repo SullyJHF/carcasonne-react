@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Socket } from 'socket.io-client';
 import { GAME_EVENTS } from '../../shared/constants/socketConstants';
-import { BoardPosition, setHoveringOver, STATE_KEY_BOARD } from './BoardSlice';
+import { PossiblePosition, setHoveringOver, STATE_KEY_BOARD } from './BoardSlice';
 import { useAppSelector } from './hooks';
 import { DispatchFunc } from './store';
 
@@ -11,7 +11,7 @@ export enum ORIENTATION {
   SOUTH = 2,
   WEST = 3,
 }
-export interface ITile extends BoardPosition {
+export interface ITile extends PossiblePosition {
   tileId: number;
   orientation: ORIENTATION;
 }
@@ -84,9 +84,13 @@ export const rotateOrientingTile =
   (socket: Socket, clockwise: boolean): DispatchFunc =>
   (dispatch, getState) => {
     const currentOrientingTile = getState()[STATE_KEY_TILES].currentOrientingTile;
-    const l = Object.keys(ORIENTATION).length / 2; // for some reason length has to be divided by 2 - https://stackoverflow.com/questions/38034673/determine-the-number-of-enum-elements-typescript
-    const curI = currentOrientingTile.orientation;
-    const nextOrientation = clockwise ? (curI + 1) % l : (l + ((curI - 1) % l)) % l;
+    const { possibleOrientations, orientation } = currentOrientingTile;
+    const l = possibleOrientations.length;
+    if (l === 1) return;
+
+    const orientationIndex = possibleOrientations.indexOf(orientation);
+    const nextOrientationIndex = clockwise ? (orientationIndex + 1) % l : (l + ((orientationIndex - 1) % l)) % l;
+    const nextOrientation = possibleOrientations[nextOrientationIndex];
     dispatch(setCurrentOrientingTile({ ...currentOrientingTile, orientation: nextOrientation }));
     socket?.emit(GAME_EVENTS.REORIENT_TILE, nextOrientation);
   };

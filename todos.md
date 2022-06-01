@@ -4,8 +4,9 @@
   - [x] ~~_Cancel button to cancel placement_~~ [2022-05-31]
   - [ ] Drag to cancel and re-place?
 - [ ] Rotations
-  - [ ] Data setup for all tile rotations
-  - [ ] Calculating possible rotations/positions on the server
+  - [x] ~~_Data setup for all tile rotations_~~ [2022-06-01]
+  - [x] ~~_Calculating possible rotations/positions on the server_~~ [2022-06-01]
+  - [ ] Don't show rotation buttons if can't rotate
 - [ ] Player turns
   - [ ] Only allowing current player to place
   - [ ] Auto rotating through players
