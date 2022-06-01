@@ -80,4 +80,26 @@ module.exports = {
     '@typescript-eslint/type-annotation-spacing': ['warn'],
     '@typescript-eslint/lines-between-class-members': 0,
   },
+  overrides: [
+    {
+      files: ['**/__tests__/**/*', 'jest*', '**/__mocks__/**/*'],
+      extends: ['plugin:jest/recommended', 'plugin:jest/style'],
+      plugins: ['jest'],
+      rules: {
+        'react/jsx-filename-extension': 0,
+        'jest/no-mocks-import': 1,
+        'no-import-assign': 1,
+        '@typescript-eslint/dot-notation': 0,
+      },
+      env: {
+        'jest/globals': true,
+        node: true,
+      },
+      settings: {
+        jest: {
+          version: 28,
+        },
+      },
+    },
+  ],
 };
