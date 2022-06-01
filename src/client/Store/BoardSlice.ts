@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { boardToScreenPos } from '../utils/maths';
-import { setDebugTilePosition } from './DebugSlice';
 import { useAppSelector } from './hooks';
-import { AppDispatch, RootState } from './store';
 import { Dimensions, ITile, ORIENTATION } from './TileSlice';
 
 export interface PossiblePosition extends BoardPosition {
@@ -62,11 +59,5 @@ export const { setBoardDimensions, setPossiblePositions, setHoveringOver, setTil
   BoardSlice.actions;
 
 export const useBoardData = () => useAppSelector((state) => state[STATE_KEY_BOARD]);
-
-export const calculatePossiblePositions =
-  (tileDims: Dimensions, boardDims: Dimensions) => (dispatch: AppDispatch, getState: () => RootState) => {
-    const debug = boardToScreenPos(1, 0, tileDims, boardDims);
-    dispatch(setDebugTilePosition({ x: debug.x, y: debug.y }));
-  };
 
 export default BoardSlice.reducer;

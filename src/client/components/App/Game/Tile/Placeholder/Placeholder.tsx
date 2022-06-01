@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { setDebugTilePosition } from '../../../../../Store/DebugSlice';
 import { useAppDispatch } from '../../../../../Store/hooks';
 import { setTileDimensions, useTileData } from '../../../../../Store/TileSlice';
 import useDimensions from '../../../../../utils/hooks';
@@ -17,14 +16,6 @@ export const Placeholder = () => {
         yOffset: dims.y,
         width: dims.width,
         height: dims.height,
-      }),
-    );
-    dispatch(
-      setDebugTilePosition({
-        w: dims.width,
-        h: dims.height,
-        x: dims.x,
-        y: dims.y,
       }),
     );
   }, [dims]);

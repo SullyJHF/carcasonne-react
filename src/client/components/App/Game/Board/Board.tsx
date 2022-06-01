@@ -5,7 +5,6 @@ import { useTileData } from '../../../../Store/TileSlice';
 import useDimensions from '../../../../utils/hooks';
 import { OrientingTile, PlacedTile } from '../Tile/Tile';
 import './board.scss';
-import { useBoardEffects } from './boardEffects';
 import { PossiblePosition } from './PossiblePosition/PossiblePosition';
 
 const setupDimensions = () => {
@@ -28,7 +27,6 @@ export const Board = () => {
   const boardRef = setupDimensions();
   const { possiblePositions, tiles } = useBoardData();
   const { currentOrientingTile } = useTileData();
-  useBoardEffects();
 
   return (
     <div id="board" ref={boardRef}>
