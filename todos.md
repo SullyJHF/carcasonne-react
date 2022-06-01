@@ -16,3 +16,8 @@
   - [ ] Handle player disconnect - pause game maybe? Voting to kick after timeout?
   - [ ] Lots more
 - [ ] Meeple placement
+  - [ ] Naively show where all meeple placements can go
+  - [ ] Calculate connected roads
+  - [ ] Calculate connected cities
+  - [ ] Calculate connected fields
+  - [ ] Only allow meeple placement on unoccupied things
