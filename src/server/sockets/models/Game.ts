@@ -69,6 +69,7 @@ export class Game {
     this.currentOrientingTile = null;
     this.currentTile = this.getRandomTile();
     this.board.calculatePossiblePositions(this.currentTile);
+    this.playerManager.nextPlayer();
   }
 
   onCancelPlacement() {

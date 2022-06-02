@@ -30,7 +30,9 @@ export class PlayerManager {
       connected: true,
     };
     this.players[userId] = player;
-    this.playerOrder.push(userId);
+    if (this.playerOrder.indexOf(userId) === -1) {
+      this.playerOrder.push(userId);
+    }
     if (!this.currentPlayer) {
       this.currentPlayer = userId;
       this.currentPlayerIndex = this.playerOrder.indexOf(userId);
@@ -52,5 +54,11 @@ export class PlayerManager {
     //   if (!this.playerOrder.length) this.currentPlayer = null;
     //   else this.currentPlayer = 0;
     // }
+  }
+
+  nextPlayer() {
+    this.currentPlayerIndex++;
+    this.currentPlayerIndex %= this.playerOrder.length;
+    this.currentPlayer = this.playerOrder[this.currentPlayerIndex];
   }
 }
