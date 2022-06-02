@@ -1,6 +1,7 @@
 import { ConnectedUser } from './UserManager';
 
 export interface Player {
+  playerId: string;
   name: string;
   connected: boolean;
 }
@@ -23,6 +24,7 @@ export class PlayerManager {
   addPlayer(user: ConnectedUser) {
     const { userId } = user;
     const player: Player = {
+      playerId: userId,
       name: userId.substring(0, 8),
       connected: true,
     };

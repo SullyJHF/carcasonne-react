@@ -5,9 +5,11 @@ import { useUserData } from '../../../Store/UserSlice';
 import './player.scss';
 
 const Player = ({ player }: { player: IPlayer }) => {
+  const { localUserId } = useUserData();
+  const name = player.playerId === localUserId ? 'Me' : player.name;
   return (
     <div className="player">
-      <div className="name">{player.name}</div>
+      <div className="name">{name}</div>
       <div className={`connected-pip ${player.connected ? 'connected' : 'disconnected'}`}>
         <ClearIcon sx={{ color: 'red' }} />
       </div>
