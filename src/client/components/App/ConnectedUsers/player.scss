@@ -1,0 +1,15 @@
+@import "../variables";
+.player {
+  display: flex;
+  align-items: center;
+  padding: $spacing-xxsmall;
+  .name {
+  }
+  .connected-pip {
+    display: flex;
+    align-items: center;
+    &.connected {
+      opacity: 0;
+    }
+  }
+}
