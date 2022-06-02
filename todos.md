@@ -7,17 +7,18 @@
   - [x] ~~_Data setup for all tile rotations_~~ [2022-06-01]
   - [x] ~~_Calculating possible rotations/positions on the server_~~ [2022-06-01]
   - [ ] Don't show rotation buttons if can't rotate
-- [ ] Player turns
-  - [ ] Only allowing current player to place
-  - [ ] Auto rotating through players
+- [x] ~~_Player turns_~~ [2022-06-02]
+  - [x] ~~_Only allowing current player to place_~~ [2022-06-02]
+  - [x] ~~_Auto rotating through players_~~ [2022-06-02]
+- [ ] Meeple placement
+  - [ ] Place meeple just on a tile (in the centre)
+    - [ ] Have this be part of the game loop
+  - [ ] Calculate connected roads
+  - [ ] Calculate connected cities
+  - [ ] Calculate connected fields
+  - [ ] Only allow meeple placement on unoccupied things
 - [ ] Multiple games
   - [ ] Host/join screen
   - [ ] Player naming
   - [ ] Handle player disconnect - pause game maybe? Voting to kick after timeout?
   - [ ] Lots more
-- [ ] Meeple placement
-  - [ ] Naively show where all meeple placements can go
-  - [ ] Calculate connected roads
-  - [ ] Calculate connected cities
-  - [ ] Calculate connected fields
-  - [ ] Only allow meeple placement on unoccupied things

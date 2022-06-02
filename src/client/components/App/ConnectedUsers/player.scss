@@ -1,23 +1,52 @@
 @import "../variables";
+#players {
+  width: 100%;
+}
 .player {
   display: flex;
-  align-items: center;
-  padding: $spacing-xxsmall;
-  .player-indicator {
+  flex-direction: column;
+  align-items: flex-start;
+  .row {
+    width: 100%;
     display: flex;
+    padding: $spacing-xxsmall;
     align-items: center;
-    opacity: 0;
-    &.show {
-      opacity: 1;
-    }
-  }
-  .name {
-  }
-  .connected-pip {
-    display: flex;
-    align-items: center;
-    &.connected {
+    justify-content: space-between;
+    .player-indicator {
+      display: flex;
+      align-items: center;
       opacity: 0;
+      &.show {
+        opacity: 1;
+      }
+    }
+    .name {
+      flex: 1;
+    }
+    .connected-pip {
+      display: flex;
+      align-items: center;
+      &.connected {
+        opacity: 0;
+      }
+    }
+    .meeple-list {
+      width: 100%;
+      justify-content: center;
+      display: flex;
+      gap: $spacing-xxsmall;
+      .meeple {
+        svg {
+          fill: #f45b69;
+          max-height: $spacing-normal;
+        }
+        // Other colours
+        // #048A81 green
+        // #F0C808 yellow
+        // #9297C4 bluey
+        // #F1DEDE grey
+        // #0E0606 black
+      }
     }
   }
 }

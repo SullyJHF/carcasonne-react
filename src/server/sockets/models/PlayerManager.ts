@@ -1,9 +1,15 @@
+import { BoardPosition } from '../../../client/Store/BoardSlice';
 import { ConnectedUser } from './UserManager';
 
+type MeepleList = [Meeple, Meeple, Meeple, Meeple, Meeple, Meeple, Meeple];
+export interface Meeple {
+  placedOnTile: BoardPosition;
+}
 export interface Player {
   playerId: string;
   name: string;
   connected: boolean;
+  meeple: MeepleList;
 }
 
 export interface PlayerMap {
@@ -22,12 +28,25 @@ export class PlayerManager {
     this.currentPlayer = null;
   }
 
+  private initialMeeple(): MeepleList {
+    return [
+      { placedOnTile: null },
+      { placedOnTile: null },
+      { placedOnTile: null },
+      { placedOnTile: null },
+      { placedOnTile: null },
+      { placedOnTile: null },
+      { placedOnTile: null },
+    ];
+  }
+
   addPlayer(user: ConnectedUser) {
     const { userId } = user;
     const player: Player = {
       playerId: userId,
       name: userId.substring(0, 8),
       connected: true,
+      meeple: this.initialMeeple(),
     };
     this.players[userId] = player;
     if (this.playerOrder.indexOf(userId) === -1) {
