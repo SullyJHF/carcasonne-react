@@ -2,7 +2,7 @@ import { Game } from '../../server/sockets/models/Game';
 import { setPossiblePositions, setTiles } from './BoardSlice';
 import { DispatchFunc } from './store';
 import { setCurrentOrientingTile, setCurrentTile } from './TileSlice';
-import { setUserList } from './UserSlice';
+import { setCurrentPlayer, setUserList } from './UserSlice';
 
 export const gameStateUpdated =
   (gameState: Game): DispatchFunc =>
@@ -12,4 +12,5 @@ export const gameStateUpdated =
     dispatch(setCurrentTile(gameState.currentTile));
     dispatch(setCurrentOrientingTile(gameState.currentOrientingTile));
     dispatch(setUserList(gameState.playerManager.players));
+    dispatch(setCurrentPlayer(gameState.playerManager.currentPlayer));
   };

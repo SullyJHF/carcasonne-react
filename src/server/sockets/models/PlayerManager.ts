@@ -11,7 +11,8 @@ export interface PlayerMap {
 }
 
 export class PlayerManager {
-  currentPlayer: number;
+  currentPlayerIndex: number;
+  currentPlayer: string;
   playerOrder: string[];
   players: PlayerMap;
 
@@ -30,7 +31,10 @@ export class PlayerManager {
     };
     this.players[userId] = player;
     this.playerOrder.push(userId);
-    if (!this.currentPlayer) this.currentPlayer = 0;
+    if (!this.currentPlayer) {
+      this.currentPlayer = userId;
+      this.currentPlayerIndex = this.playerOrder.indexOf(userId);
+    }
   }
 
   removePlayer(user: ConnectedUser) {
