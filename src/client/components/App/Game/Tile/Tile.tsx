@@ -13,6 +13,7 @@ import {
   tilePlaced,
   useTileData,
 } from '../../../../Store/TileSlice';
+import { useIsMyTurn } from '../../../../Store/UserSlice';
 import { orientationToStyle, posToStyle } from '../../../../utils/display';
 import { boardToScreenPos, distance, getCentre, intersects } from '../../../../utils/maths';
 import { useSocket } from '../../SocketTest/socketHooks';
@@ -82,6 +83,7 @@ const getTileImageSrc = (tileId: number) => `/images/${tileId >= 0 && tileId <= 
 export const Tile = ({ tileId = -1, draggable = false }: TileProps) => {
   const nodeRef = useRef(null);
   const { onDrag, onDragStart, onDragStop } = useTileDrag();
+  const isMyTurn = useIsMyTurn();
 
   // Using a standard variable here instead of a wrapped custom StaticTile component
   // because of the props needed to be passed: https://github.com/react-grid-layout/react-draggable#draggable-api
@@ -91,7 +93,7 @@ export const Tile = ({ tileId = -1, draggable = false }: TileProps) => {
     </div>
   );
 
-  if (!draggable) return TileReturn;
+  if (!draggable || !isMyTurn) return TileReturn;
 
   return (
     <Draggable nodeRef={nodeRef} onStart={onDragStart} onStop={onDragStop} onDrag={onDrag}>
@@ -116,6 +118,7 @@ export const PlacedTile = (props: ITile & { key: string }) => {
 export const OrientingTile = (props: ITile) => {
   const dispatch = useAppDispatch();
   const socket = useSocket();
+  const isMyTurn = useIsMyTurn();
   const { dimensions: tileDims } = useTileData();
   const { dimensions: boardDims } = useBoardData();
   const pos = boardToScreenPos(props.boardX, props.boardY, tileDims, boardDims);
@@ -123,24 +126,26 @@ export const OrientingTile = (props: ITile) => {
   const orientationStyle = orientationToStyle(props.orientation);
   return (
     <div className="tile placed orienting" style={style}>
-      <div className="controls">
-        <div className="row">
-          <button className="btn rotate left" onClick={() => dispatch(rotateOrientingTile(socket, false))}>
-            <RedoIcon />
-          </button>
-          <button className="btn rotate right" onClick={() => dispatch(rotateOrientingTile(socket, true))}>
-            <RedoIcon />
-          </button>
+      {isMyTurn && (
+        <div className="controls">
+          <div className="row">
+            <button className="btn rotate left" onClick={() => dispatch(rotateOrientingTile(socket, false))}>
+              <RedoIcon />
+            </button>
+            <button className="btn rotate right" onClick={() => dispatch(rotateOrientingTile(socket, true))}>
+              <RedoIcon />
+            </button>
+          </div>
+          <div className="row">
+            <button className="btn" onClick={() => dispatch(cancelTilePlacement(socket))}>
+              <ClearIcon />
+            </button>
+            <button className="btn" onClick={() => dispatch(confirmOrientation(socket))}>
+              <DoneIcon />
+            </button>
+          </div>
         </div>
-        <div className="row">
-          <button className="btn" onClick={() => dispatch(cancelTilePlacement(socket))}>
-            <ClearIcon />
-          </button>
-          <button className="btn" onClick={() => dispatch(confirmOrientation(socket))}>
-            <DoneIcon />
-          </button>
-        </div>
-      </div>
+      )}
       <img src={getTileImageSrc(props.tileId)} alt="a carcasonne tile" draggable={false} style={orientationStyle} />
     </div>
   );
