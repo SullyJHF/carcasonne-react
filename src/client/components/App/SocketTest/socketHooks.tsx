@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import socketIOClient, { Socket } from 'socket.io-client';
+import { v4 as uuidv4 } from 'uuid';
 import { USER_EVENTS } from '../../../../shared/constants/socketConstants';
+import { useLocalStorage } from '../../../utils/hooks';
 
 const CONNECTION_EVENTS = {
   CONNECT: 'connect',
@@ -8,6 +10,7 @@ const CONNECTION_EVENTS = {
 
 const useSocketConnection = (): Socket | null => {
   const [socket, setSocket] = useState<null | Socket>(null);
+  const [localId, setLocalId] = useLocalStorage('player-id', null);
 
   // Initialise socket on first load
   useEffect(() => {
@@ -23,7 +26,12 @@ const useSocketConnection = (): Socket | null => {
   useEffect(() => {
     if (socket === null) return undefined;
     socket.on(CONNECTION_EVENTS.CONNECT, () => {
-      socket.emit(USER_EVENTS.JOIN_GAME);
+      let uuid = localId;
+      if (localId === null) {
+        uuid = uuidv4();
+        setLocalId(uuid);
+      }
+      socket.emit(USER_EVENTS.JOIN_GAME, uuid);
     });
     return () => {
       socket.disconnect();

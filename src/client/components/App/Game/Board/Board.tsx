@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { setBoardDimensions, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
 import { useTileData } from '../../../../Store/TileSlice';
-import useDimensions from '../../../../utils/hooks';
+import { useDimensions } from '../../../../utils/hooks';
 import { OrientingTile, PlacedTile } from '../Tile/Tile';
 import './board.scss';
 import { PossiblePosition } from './PossiblePosition/PossiblePosition';

@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ConnectedUserMap } from './../../server/sockets/models/UserManager';
+import { PlayerMap } from '../../server/sockets/models/PlayerManager';
 import { useAppSelector } from './hooks';
 
 interface UserState {
-  users: ConnectedUserMap;
+  users: PlayerMap;
 }
 
 const initialState: UserState = {
@@ -15,7 +15,7 @@ const UserSlice = createSlice({
   name: STATE_KEY_USERS,
   initialState,
   reducers: {
-    setUserList: (state, action: PayloadAction<ConnectedUserMap>) => {
+    setUserList: (state: UserState, action: PayloadAction<PlayerMap>) => {
       state.users = action.payload;
     },
   },

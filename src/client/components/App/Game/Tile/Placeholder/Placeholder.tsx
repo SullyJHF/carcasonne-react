@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '../../../../../Store/hooks';
 import { setTileDimensions, useTileData } from '../../../../../Store/TileSlice';
-import useDimensions from '../../../../../utils/hooks';
+import { useDimensions } from '../../../../../utils/hooks';
 import { Tile } from '../Tile';
 import './placeholder.scss';
 

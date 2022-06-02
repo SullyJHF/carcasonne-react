@@ -4,11 +4,11 @@ import { BoardPosition } from '../../../client/Store/BoardSlice';
 import { ITile, ORIENTATION } from '../../../client/Store/TileSlice';
 import { InitialAvailableTiles } from '../../../shared/constants/AvailableTiles';
 import { Board } from './Board';
-import UserManager, { ConnectedUserMap } from './UserManager';
+import { PlayerManager } from './PlayerManager';
 
 export class Game {
   id: string;
-  players: ConnectedUserMap;
+  playerManager: PlayerManager;
 
   board: Board;
 
@@ -18,7 +18,8 @@ export class Game {
 
   constructor() {
     this.id = randomUUID();
-    this.players = UserManager.getUsers();
+    this.playerManager = new PlayerManager();
+
     this.availableTiles = InitialAvailableTiles;
     this.currentTile = this.getRandomTile();
 
