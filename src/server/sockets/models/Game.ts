@@ -76,6 +76,7 @@ export class Game {
     this.currentTile = this.currentOrientingTile.tileId;
     this.currentOrientingTile = null;
     this.board.calculatePossiblePositions(this.currentTile);
+    this.playerManager.cancelPlacedMeeple();
   }
 
   onMeeplePlaced(position: BoardPosition) {

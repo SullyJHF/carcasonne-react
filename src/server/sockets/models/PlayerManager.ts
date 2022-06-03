@@ -4,6 +4,7 @@ import { ConnectedUser } from './UserManager';
 type MeepleList = [Meeple, Meeple, Meeple, Meeple, Meeple, Meeple, Meeple];
 export interface Meeple {
   placedOnTile: BoardPosition;
+  confirmed: boolean;
 }
 export interface Player {
   playerId: string;
@@ -30,14 +31,18 @@ export class PlayerManager {
 
   private initialMeeple(): MeepleList {
     return [
-      { placedOnTile: null },
-      { placedOnTile: null },
-      { placedOnTile: null },
-      { placedOnTile: null },
-      { placedOnTile: null },
-      { placedOnTile: null },
-      { placedOnTile: null },
+      { placedOnTile: null, confirmed: false },
+      { placedOnTile: null, confirmed: false },
+      { placedOnTile: null, confirmed: false },
+      { placedOnTile: null, confirmed: false },
+      { placedOnTile: null, confirmed: false },
+      { placedOnTile: null, confirmed: false },
+      { placedOnTile: null, confirmed: false },
     ];
+  }
+
+  getCurrentPlayer() {
+    return this.players[this.currentPlayer];
   }
 
   addPlayer(user: ConnectedUser) {
@@ -76,15 +81,30 @@ export class PlayerManager {
   }
 
   nextPlayer() {
+    // also confirm any meeple placements
+    this.confirmPlacedMeeple();
+
     this.currentPlayerIndex++;
     this.currentPlayerIndex %= this.playerOrder.length;
     this.currentPlayer = this.playerOrder[this.currentPlayerIndex];
   }
 
   placeMeeple(position: BoardPosition) {
-    const { meeple } = this.players[this.currentPlayer];
+    const { meeple } = this.getCurrentPlayer();
     const freeMeeple = meeple.find((meep) => !meep.placedOnTile);
     if (!freeMeeple) return;
     freeMeeple.placedOnTile = position;
+  }
+
+  confirmPlacedMeeple() {
+    const { meeple } = this.getCurrentPlayer();
+    const placingMeeple = meeple.find((meep) => meep.placedOnTile && !meep.confirmed);
+    if (placingMeeple) placingMeeple.confirmed = true;
+  }
+
+  cancelPlacedMeeple() {
+    const { meeple } = this.getCurrentPlayer();
+    const placingMeeple = meeple.find((meep) => meep.placedOnTile && !meep.confirmed);
+    if (placingMeeple) placingMeeple.placedOnTile = null;
   }
 }

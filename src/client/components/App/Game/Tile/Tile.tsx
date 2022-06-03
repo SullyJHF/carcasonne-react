@@ -13,7 +13,7 @@ import {
   tilePlaced,
   useTileData,
 } from '../../../../Store/TileSlice';
-import { placeMeeple, useAvailableMeeple, useIsMyTurn } from '../../../../Store/UserSlice';
+import { placeMeeple, useCanPlaceMeeple, useIsMyTurn } from '../../../../Store/UserSlice';
 import { orientationToStyle, posToStyle } from '../../../../utils/display';
 import { boardToScreenPos, distance, getCentre, intersects } from '../../../../utils/maths';
 import { useSocket } from '../../SocketTest/socketHooks';
@@ -118,7 +118,7 @@ export const PlacedTile = (props: ITile & { key: string }) => {
 export const OrientingTile = ({ tileId, boardX, boardY, orientation }: ITile) => {
   const dispatch = useAppDispatch();
   const socket = useSocket();
-  const availableMeeple = useAvailableMeeple();
+  const canPlaceMeeple = useCanPlaceMeeple();
   const isMyTurn = useIsMyTurn();
   const { dimensions: tileDims } = useTileData();
   const { dimensions: boardDims } = useBoardData();
@@ -137,7 +137,7 @@ export const OrientingTile = ({ tileId, boardX, boardY, orientation }: ITile) =>
               <RedoIcon />
             </button>
           </div>
-          {availableMeeple.length && (
+          {canPlaceMeeple && (
             <div className="row center">
               <button
                 className="btn meeple-placement"

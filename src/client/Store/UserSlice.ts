@@ -43,10 +43,13 @@ export const useIsMyTurn = () =>
   useAppSelector((state) => state[STATE_KEY_USERS].currentPlayer === state[STATE_KEY_USERS].localUserId);
 
 export const useMe = () => useAppSelector((state) => state[STATE_KEY_USERS].users[state[STATE_KEY_USERS].localUserId]);
-export const useAvailableMeeple = () => {
+export const useCanPlaceMeeple = () => {
   const me = useMe();
-  if (!me) return [];
-  return me.meeple.filter((meeple) => !meeple.placedOnTile);
+  if (!me) return false;
+  const availableMeeple = me.meeple.filter((meeple) => !meeple.placedOnTile);
+  const currentlyPlacingMeeple = me.meeple.find((meeple) => meeple.placedOnTile && !meeple.confirmed);
+  // if (currentlyPlacingMeeple) return false;
+  return availableMeeple.length && !currentlyPlacingMeeple;
 };
 
 export const placeMeeple =
