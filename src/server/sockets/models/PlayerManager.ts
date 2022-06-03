@@ -5,6 +5,7 @@ type MeepleList = [Meeple, Meeple, Meeple, Meeple, Meeple, Meeple, Meeple];
 export interface Meeple {
   placedOnTile: BoardPosition;
   confirmed: boolean;
+  playerId: string;
 }
 export interface Player {
   playerId: string;
@@ -29,15 +30,15 @@ export class PlayerManager {
     this.currentPlayer = null;
   }
 
-  private initialMeeple(): MeepleList {
+  private initialMeeple(userId: string): MeepleList {
     return [
-      { placedOnTile: null, confirmed: false },
-      { placedOnTile: null, confirmed: false },
-      { placedOnTile: null, confirmed: false },
-      { placedOnTile: null, confirmed: false },
-      { placedOnTile: null, confirmed: false },
-      { placedOnTile: null, confirmed: false },
-      { placedOnTile: null, confirmed: false },
+      { placedOnTile: null, confirmed: false, playerId: userId },
+      { placedOnTile: null, confirmed: false, playerId: userId },
+      { placedOnTile: null, confirmed: false, playerId: userId },
+      { placedOnTile: null, confirmed: false, playerId: userId },
+      { placedOnTile: null, confirmed: false, playerId: userId },
+      { placedOnTile: null, confirmed: false, playerId: userId },
+      { placedOnTile: null, confirmed: false, playerId: userId },
     ];
   }
 
@@ -47,11 +48,16 @@ export class PlayerManager {
 
   addPlayer(user: ConnectedUser) {
     const { userId } = user;
+    if (this.players[userId]) {
+      this.players[userId].connected = true;
+      return;
+    }
+
     const player: Player = {
       playerId: userId,
       name: userId.substring(0, 8),
       connected: true,
-      meeple: this.initialMeeple(),
+      meeple: this.initialMeeple(userId),
     };
     this.players[userId] = player;
     if (this.playerOrder.indexOf(userId) === -1) {

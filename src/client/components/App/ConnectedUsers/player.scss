@@ -1,4 +1,5 @@
 @import "../variables";
+
 #players {
   width: 100%;
 }
@@ -28,29 +29,6 @@
       align-items: center;
       &.connected {
         opacity: 0;
-      }
-    }
-    .meeple-list {
-      width: 100%;
-      justify-content: center;
-      display: flex;
-      gap: $spacing-xxsmall;
-      .meeple {
-        svg {
-          fill: #f45b69;
-          max-height: $spacing-normal;
-        }
-        &.placed {
-          svg {
-            fill: #0e0606;
-          }
-        }
-        // Other colours
-        // #048A81 green
-        // #F0C808 yellow
-        // #9297C4 bluey
-        // #F1DEDE grey
-        // #0E0606 black
       }
     }
   }

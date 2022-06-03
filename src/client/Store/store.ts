@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import BoardSlice, { STATE_KEY_BOARD } from './BoardSlice';
 import DebugSlice, { STATE_KEY_DEBUG_SLICE } from './DebugSlice';
+import MeepleSlice, { STATE_KEY_MEEPLE } from './MeepleSlice';
 import TileSlice, { STATE_KEY_TILES } from './TileSlice';
 import UserSlice, { STATE_KEY_USERS } from './UserSlice';
 
@@ -9,6 +10,7 @@ const store = configureStore({
     [STATE_KEY_USERS]: UserSlice,
     [STATE_KEY_TILES]: TileSlice,
     [STATE_KEY_BOARD]: BoardSlice,
+    [STATE_KEY_MEEPLE]: MeepleSlice,
     [STATE_KEY_DEBUG_SLICE]: DebugSlice,
   },
 });

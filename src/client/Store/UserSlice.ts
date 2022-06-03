@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Socket } from 'socket.io-client';
-import { PlayerMap } from '../../server/sockets/models/PlayerManager';
+import { Meeple, PlayerMap } from '../../server/sockets/models/PlayerManager';
 import { GAME_EVENTS } from '../../shared/constants/socketConstants';
 import { BoardPosition } from './BoardSlice';
 import { useAppSelector } from './hooks';
@@ -38,6 +38,15 @@ const UserSlice = createSlice({
 export const { setUserList, setLocalUserId, setCurrentPlayer } = UserSlice.actions;
 
 export const useUserData = () => useAppSelector((state) => state[STATE_KEY_USERS]);
+
+export const useAllMeeple = () =>
+  useAppSelector(
+    (state) =>
+      Object.keys(state[STATE_KEY_USERS].users).reduce((acc, userId) => {
+        const user = state[STATE_KEY_USERS].users[userId];
+        return [...acc, ...user.meeple];
+      }, []) as Meeple[],
+  );
 
 export const useIsMyTurn = () =>
   useAppSelector((state) => state[STATE_KEY_USERS].currentPlayer === state[STATE_KEY_USERS].localUserId);

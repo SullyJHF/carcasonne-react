@@ -22,11 +22,27 @@ export const intersects = (
   return true;
 };
 
-export const boardToScreenPos = (boardX: number, boardY: number, tileDims: Dimensions, boardDims: Dimensions) => {
+export const tileToScreenPos = (boardX: number, boardY: number, tileDims: Dimensions, boardDims: Dimensions) => {
   const x = (boardDims.width || 1) / 2 - (tileDims.width || 1) / 2 + boardDims.xOffset + tileDims.width * boardX;
   const y = (boardDims.height || 1) / 2 - (tileDims.height || 1) / 2 + boardDims.yOffset + tileDims.height * boardY;
   const w = tileDims.width;
   const h = tileDims.height;
+  return { x, y, w, h };
+};
+
+export const meepleToScreenPos = (
+  boardX: number,
+  boardY: number,
+  meepleDims: Dimensions,
+  tileDims: Dimensions,
+  boardDims: Dimensions,
+) => {
+  let x = (boardDims.width || 1) / 2 - (tileDims.width || 1) / 2 + boardDims.xOffset + tileDims.width * boardX;
+  let y = (boardDims.height || 1) / 2 - (tileDims.height || 1) / 2 + boardDims.yOffset + tileDims.height * boardY;
+  x += (tileDims.width || 1) / 2 - (meepleDims.width || 1) / 2;
+  y += (tileDims.height || 1) / 2 - (meepleDims.height || 1) / 2;
+  const w = meepleDims.width;
+  const h = meepleDims.height;
   return { x, y, w, h };
 };
 

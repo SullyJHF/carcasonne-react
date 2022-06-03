@@ -15,7 +15,7 @@ import {
 } from '../../../../Store/TileSlice';
 import { placeMeeple, useCanPlaceMeeple, useIsMyTurn } from '../../../../Store/UserSlice';
 import { orientationToStyle, posToStyle } from '../../../../utils/display';
-import { boardToScreenPos, distance, getCentre, intersects } from '../../../../utils/maths';
+import { distance, getCentre, intersects, tileToScreenPos } from '../../../../utils/maths';
 import { useSocket } from '../../SocketTest/socketHooks';
 import './tile.scss';
 
@@ -35,7 +35,7 @@ const useTileDrag = () => {
     const tileY = dragY + tileDims.yOffset;
     const hoveringPositions: BoardPosition[] = [];
     for (const position of possiblePositions) {
-      const { x, y, w, h } = boardToScreenPos(position.boardX, position.boardY, tileDims, boardDims);
+      const { x, y, w, h } = tileToScreenPos(position.boardX, position.boardY, tileDims, boardDims);
       if (intersects(tileX, tileY, tileDims.width, tileDims.height, x, y, w, h)) {
         hoveringPositions.push(position);
       }
@@ -55,7 +55,7 @@ const useTileDrag = () => {
     let minDist = Number.MAX_SAFE_INTEGER;
     let minPos: BoardPosition = null;
     for (const position of hoveringPositions) {
-      const { x, y } = boardToScreenPos(position.boardX, position.boardY, tileDims, boardDims);
+      const { x, y } = tileToScreenPos(position.boardX, position.boardY, tileDims, boardDims);
       const { x: posCentreX, y: posCentreY } = getCentre(x, y, tileDims.width, tileDims.height);
       const dist = distance(tileCentreX, tileCentreY, posCentreX, posCentreY);
       if (dist < minDist) {
@@ -105,7 +105,7 @@ export const Tile = ({ tileId = -1, draggable = false }: TileProps) => {
 export const PlacedTile = (props: ITile & { key: string }) => {
   const { dimensions: tileDims } = useTileData();
   const { dimensions: boardDims } = useBoardData();
-  const pos = boardToScreenPos(props.boardX, props.boardY, tileDims, boardDims);
+  const pos = tileToScreenPos(props.boardX, props.boardY, tileDims, boardDims);
   const style = posToStyle(pos);
   const orientationStyle = orientationToStyle(props.orientation);
   return (
@@ -122,7 +122,7 @@ export const OrientingTile = ({ tileId, boardX, boardY, orientation }: ITile) =>
   const isMyTurn = useIsMyTurn();
   const { dimensions: tileDims } = useTileData();
   const { dimensions: boardDims } = useBoardData();
-  const pos = boardToScreenPos(boardX, boardY, tileDims, boardDims);
+  const pos = tileToScreenPos(boardX, boardY, tileDims, boardDims);
   const style = posToStyle(pos);
   const orientationStyle = orientationToStyle(orientation);
   return (
