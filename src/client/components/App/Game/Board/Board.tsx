@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { setBoardDimensions, useBoardData } from '../../../../Store/BoardSlice';
 import { useAppDispatch } from '../../../../Store/hooks';
 import { Dimensions, useTileData } from '../../../../Store/TileSlice';
-import { useAllMeeple } from '../../../../Store/UserSlice';
+import { useAllMeeple, useUserData } from '../../../../Store/UserSlice';
 import { useDimensions } from '../../../../utils/hooks';
 import { PlacedMeeple } from '../../ConnectedUsers/Meeple';
 import { OrientingTile, PlacedTile } from '../Tile/Tile';
@@ -30,6 +30,7 @@ export const Board = () => {
   const boardRef = useSetupDimensions(setBoardDimensions);
   const { possiblePositions, tiles } = useBoardData();
   const { currentOrientingTile } = useTileData();
+  const { users } = useUserData();
   const allMeeple = useAllMeeple();
 
   return (
@@ -37,7 +38,7 @@ export const Board = () => {
       {allMeeple
         .filter((meep) => meep.placedOnTile)
         .map((meep, i) => (
-          <PlacedMeeple key={`${meep.playerId}-${i}`} meeple={meep} />
+          <PlacedMeeple key={`${meep.playerId}-${i}`} meeple={meep} colour={users[meep.playerId].colour} />
         ))}
       {tiles.map((tile) => (
         <PlacedTile

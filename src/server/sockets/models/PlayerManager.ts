@@ -12,6 +12,7 @@ export interface Player {
   name: string;
   connected: boolean;
   meeple: MeepleList;
+  colour: string;
 }
 
 export interface PlayerMap {
@@ -19,6 +20,7 @@ export interface PlayerMap {
 }
 
 export class PlayerManager {
+  availableColours: string[];
   currentPlayerIndex: number;
   currentPlayer: string;
   playerOrder: string[];
@@ -28,6 +30,13 @@ export class PlayerManager {
     this.players = {};
     this.playerOrder = [];
     this.currentPlayer = null;
+    this.availableColours = ['#f45b69', '#048A81', '#F0C808', '#9297C4', '#F1DEDE'];
+  }
+
+  private pickRandomColour() {
+    const randIndex = Math.floor(Math.random() * this.availableColours.length);
+    const [colour] = this.availableColours.splice(randIndex, 1);
+    return colour;
   }
 
   private initialMeeple(userId: string): MeepleList {
@@ -58,6 +67,7 @@ export class PlayerManager {
       name: userId.substring(0, 8),
       connected: true,
       meeple: this.initialMeeple(userId),
+      colour: this.pickRandomColour(),
     };
     this.players[userId] = player;
     if (this.playerOrder.indexOf(userId) === -1) {

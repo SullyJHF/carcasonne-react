@@ -26,7 +26,11 @@ const Player = ({ player, meepleRef }: { player: IPlayer; meepleRef?: (node: HTM
       <div className="row">
         <div className="meeple-list">
           {player.meeple.map((meeple, i) =>
-            i === 0 ? <Meeple key={i} meepleRef={meepleRef} meeple={meeple} /> : <Meeple key={i} meeple={meeple} />,
+            i === 0 ? (
+              <Meeple key={i} meepleRef={meepleRef} meeple={meeple} colour={player.colour} />
+            ) : (
+              <Meeple key={i} meeple={meeple} colour={player.colour} />
+            ),
           )}
         </div>
       </div>

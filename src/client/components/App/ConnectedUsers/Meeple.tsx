@@ -7,10 +7,23 @@ import { posToStyle } from '../../../utils/display';
 import { meepleToScreenPos } from '../../../utils/maths';
 import './meeple.scss';
 
-export const Meeple = ({ meeple, meepleRef }: { meeple: IMeeple; meepleRef?: (node: HTMLDivElement) => void }) => {
+export const Meeple = ({
+  meeple,
+  meepleRef,
+  colour,
+}: {
+  meeple: IMeeple;
+  meepleRef?: (node: HTMLDivElement) => void;
+  colour: string;
+}) => {
   return (
     <div ref={meepleRef} className={`meeple ${meeple.placedOnTile ? 'used' : ''}`}>
-      <svg fill="#000000" version="1.1" viewBox="0 0 100 100" enableBackground="new 0 0 100 100" xmlSpace="preserve">
+      <svg
+        fill={`${colour ? colour : '#000000'}`}
+        version="1.1"
+        viewBox="0 0 100 100"
+        enableBackground="new 0 0 100 100"
+        xmlSpace="preserve">
         <path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -20,7 +33,7 @@ export const Meeple = ({ meeple, meepleRef }: { meeple: IMeeple; meepleRef?: (no
   );
 };
 
-export const PlacedMeeple = ({ meeple }: { meeple: IMeeple }) => {
+export const PlacedMeeple = ({ meeple, colour }: { meeple: IMeeple; colour: string }) => {
   const position = meeple.placedOnTile;
   const { dimensions: boardDims } = useBoardData();
   const { dimensions: tileDims } = useTileData();
@@ -29,7 +42,12 @@ export const PlacedMeeple = ({ meeple }: { meeple: IMeeple }) => {
   const style = posToStyle(pos);
   return (
     <div className="meeple placed" style={style}>
-      <svg fill="#000000" version="1.1" viewBox="0 0 100 100" enableBackground="new 0 0 100 100" xmlSpace="preserve">
+      <svg
+        fill={`${colour ? colour : '#000000'}`}
+        version="1.1"
+        viewBox="0 0 100 100"
+        enableBackground="new 0 0 100 100"
+        xmlSpace="preserve">
         <path
           fillRule="evenodd"
           clipRule="evenodd"
