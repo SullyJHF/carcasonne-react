@@ -23,7 +23,7 @@ const Player = ({ player }: { player: IPlayer }) => {
       <div className="row">
         <div className="meeple-list">
           {player.meeple.map((meeple, i) => (
-            <div key={i} className="meeple">
+            <div key={i} className={`meeple ${meeple.placedOnTile ? 'placed' : ''}`}>
               <svg
                 // height="300px"
                 // width="300px"

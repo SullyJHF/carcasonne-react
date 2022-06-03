@@ -80,4 +80,11 @@ export class PlayerManager {
     this.currentPlayerIndex %= this.playerOrder.length;
     this.currentPlayer = this.playerOrder[this.currentPlayerIndex];
   }
+
+  placeMeeple(position: BoardPosition) {
+    const { meeple } = this.players[this.currentPlayer];
+    const freeMeeple = meeple.find((meep) => !meep.placedOnTile);
+    if (!freeMeeple) return;
+    freeMeeple.placedOnTile = position;
+  }
 }

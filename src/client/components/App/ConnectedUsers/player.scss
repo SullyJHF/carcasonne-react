@@ -40,6 +40,11 @@
           fill: #f45b69;
           max-height: $spacing-normal;
         }
+        &.placed {
+          svg {
+            fill: #0e0606;
+          }
+        }
         // Other colours
         // #048A81 green
         // #F0C808 yellow

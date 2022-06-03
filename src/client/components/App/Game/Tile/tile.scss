@@ -28,11 +28,24 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      &.center {
+        justify-content: center;
+      }
       .btn {
         border-radius: 100%;
         padding: $spacing-xxsmall;
         border: none;
         display: flex;
+        &.meeple-placement {
+          opacity: 0.777;
+          background-color: #5968ed;
+          border: 3px dotted turquoise;
+          width: $spacing-normal;
+          height: $spacing-normal;
+          &:active {
+            opacity: 1;
+          }
+        }
       }
       .rotate {
         transform: rotate(45deg);

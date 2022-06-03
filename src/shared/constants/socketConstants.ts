@@ -13,5 +13,7 @@ export const GAME_EVENTS = {
   CONFIRM_ORIENTATION: 'game/confirm_orientation',
   CANCEL_PLACEMENT: 'game/cancel_placement',
 
+  PLACE_MEEPLE: 'game/place_meeple',
+
   STATE_UPDATE: 'game/state_update',
 };

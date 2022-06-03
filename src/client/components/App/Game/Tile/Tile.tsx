@@ -13,7 +13,7 @@ import {
   tilePlaced,
   useTileData,
 } from '../../../../Store/TileSlice';
-import { useIsMyTurn } from '../../../../Store/UserSlice';
+import { placeMeeple, useAvailableMeeple, useIsMyTurn } from '../../../../Store/UserSlice';
 import { orientationToStyle, posToStyle } from '../../../../utils/display';
 import { boardToScreenPos, distance, getCentre, intersects } from '../../../../utils/maths';
 import { useSocket } from '../../SocketTest/socketHooks';
@@ -115,15 +115,16 @@ export const PlacedTile = (props: ITile & { key: string }) => {
   );
 };
 
-export const OrientingTile = (props: ITile) => {
+export const OrientingTile = ({ tileId, boardX, boardY, orientation }: ITile) => {
   const dispatch = useAppDispatch();
   const socket = useSocket();
+  const availableMeeple = useAvailableMeeple();
   const isMyTurn = useIsMyTurn();
   const { dimensions: tileDims } = useTileData();
   const { dimensions: boardDims } = useBoardData();
-  const pos = boardToScreenPos(props.boardX, props.boardY, tileDims, boardDims);
+  const pos = boardToScreenPos(boardX, boardY, tileDims, boardDims);
   const style = posToStyle(pos);
-  const orientationStyle = orientationToStyle(props.orientation);
+  const orientationStyle = orientationToStyle(orientation);
   return (
     <div className="tile placed orienting" style={style}>
       {isMyTurn && (
@@ -136,6 +137,14 @@ export const OrientingTile = (props: ITile) => {
               <RedoIcon />
             </button>
           </div>
+          {availableMeeple.length && (
+            <div className="row center">
+              <button
+                className="btn meeple-placement"
+                onClick={() => dispatch(placeMeeple(socket, { boardX, boardY }))}
+              />
+            </div>
+          )}
           <div className="row">
             <button className="btn" onClick={() => dispatch(cancelTilePlacement(socket))}>
               <ClearIcon />
@@ -146,7 +155,7 @@ export const OrientingTile = (props: ITile) => {
           </div>
         </div>
       )}
-      <img src={getTileImageSrc(props.tileId)} alt="a carcasonne tile" draggable={false} style={orientationStyle} />
+      <img src={getTileImageSrc(tileId)} alt="a carcasonne tile" draggable={false} style={orientationStyle} />
     </div>
   );
 };

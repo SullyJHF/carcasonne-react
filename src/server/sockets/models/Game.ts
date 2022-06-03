@@ -77,5 +77,9 @@ export class Game {
     this.currentOrientingTile = null;
     this.board.calculatePossiblePositions(this.currentTile);
   }
+
+  onMeeplePlaced(position: BoardPosition) {
+    this.playerManager.placeMeeple(position);
+  }
   // #endregion
 }
