@@ -11,8 +11,9 @@
   - [x] ~~_Only allowing current player to place_~~ [2022-06-02]
   - [x] ~~_Auto rotating through players_~~ [2022-06-02]
 - [ ] Meeple placement
-  - [ ] Place meeple just on a tile (in the centre)
-    - [ ] Have this be part of the game loop
+  - [x] ~~_Place meeple just on a tile (in the centre)_~~ [2022-06-03]
+    - [x] ~~_Have this be part of the game loop_~~ [2022-06-03]
+  - [ ] Allow placing meeple on the actual part of the tile that makes sense
   - [ ] Calculate connected roads
   - [ ] Calculate connected cities
   - [ ] Calculate connected fields
