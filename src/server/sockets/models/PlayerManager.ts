@@ -1,9 +1,11 @@
 import { BoardPosition } from '../../../client/Store/BoardSlice';
+import { ORIENTATION } from '../../../client/Store/TileSlice';
 import { ConnectedUser } from './UserManager';
 
 type MeepleList = [Meeple, Meeple, Meeple, Meeple, Meeple, Meeple, Meeple];
 export interface Meeple {
   placedOnTile: BoardPosition;
+  positionOnTile: ORIENTATION;
   confirmed: boolean;
   playerId: string;
 }
@@ -41,13 +43,13 @@ export class PlayerManager {
 
   private initialMeeple(userId: string): MeepleList {
     return [
-      { placedOnTile: null, confirmed: false, playerId: userId },
-      { placedOnTile: null, confirmed: false, playerId: userId },
-      { placedOnTile: null, confirmed: false, playerId: userId },
-      { placedOnTile: null, confirmed: false, playerId: userId },
-      { placedOnTile: null, confirmed: false, playerId: userId },
-      { placedOnTile: null, confirmed: false, playerId: userId },
-      { placedOnTile: null, confirmed: false, playerId: userId },
+      { placedOnTile: null, confirmed: false, playerId: userId, positionOnTile: null },
+      { placedOnTile: null, confirmed: false, playerId: userId, positionOnTile: null },
+      { placedOnTile: null, confirmed: false, playerId: userId, positionOnTile: null },
+      { placedOnTile: null, confirmed: false, playerId: userId, positionOnTile: null },
+      { placedOnTile: null, confirmed: false, playerId: userId, positionOnTile: null },
+      { placedOnTile: null, confirmed: false, playerId: userId, positionOnTile: null },
+      { placedOnTile: null, confirmed: false, playerId: userId, positionOnTile: null },
     ];
   }
 

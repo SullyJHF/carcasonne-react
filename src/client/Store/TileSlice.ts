@@ -3,6 +3,7 @@ import { Socket } from 'socket.io-client';
 import { GAME_EVENTS } from '../../shared/constants/socketConstants';
 import { PossiblePosition, setHoveringOver, STATE_KEY_BOARD } from './BoardSlice';
 import { useAppSelector } from './hooks';
+import { MeeplePositions } from './MeepleSlice';
 import { DispatchFunc } from './store';
 
 export enum ORIENTATION {
@@ -14,6 +15,7 @@ export enum ORIENTATION {
 export interface ITile extends PossiblePosition {
   tileId: number;
   orientation: ORIENTATION;
+  possibleMeeplePositions?: MeeplePositions; // this is going to be something different when farming is added
 }
 export interface Dimensions {
   xOffset: number;

@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useAppSelector } from './hooks';
-import { Dimensions } from './TileSlice';
+import { Dimensions, ORIENTATION } from './TileSlice';
 
+export interface MeeplePositions {
+  roads: ORIENTATION[];
+  cities: ORIENTATION[];
+}
 interface MeepleState {
   dimensions: Dimensions;
 }

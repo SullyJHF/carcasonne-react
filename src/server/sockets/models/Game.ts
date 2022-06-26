@@ -2,7 +2,8 @@ import console from 'console';
 import { randomUUID } from 'crypto';
 import { BoardPosition } from '../../../client/Store/BoardSlice';
 import { ITile, ORIENTATION } from '../../../client/Store/TileSlice';
-import { InitialAvailableTiles } from '../../../shared/constants/AvailableTiles';
+import { CityConnectionMap, InitialAvailableTiles, RoadConnectionMap } from '../../../shared/constants/AvailableTiles';
+import { MeeplePositions } from './../../../client/Store/MeepleSlice';
 import { Board } from './Board';
 import { PlayerManager } from './PlayerManager';
 
@@ -30,13 +31,41 @@ export class Game {
     return this;
   }
 
+  static calculateCityMeeplePositions(tileId: number) {
+    const positions = [];
+    for (const cityConnection of CityConnectionMap[tileId]) {
+      // might need to work out the average position if there are multiple in this array
+      // that will occur when a city connects across or between two areas
+      positions.push(cityConnection[0]);
+    }
+    return positions;
+  }
+
+  static calculateRoadMeeplePositions(tileId: number): ORIENTATION[] {
+    const positions = [];
+    for (const roadConnection of RoadConnectionMap[tileId]) {
+      positions.push(roadConnection[0]);
+    }
+    return positions;
+  }
+
+  static calculateMeeplePositions(tileId: number): MeeplePositions {
+    // this will eventually calculate whether someone else is on a road/city etc.
+    // but for now just returning the naïve possible positions
+    const roads = Game.calculateRoadMeeplePositions(tileId);
+    const cities = Game.calculateCityMeeplePositions(tileId);
+    return { roads, cities };
+  }
+
   private startOrientingTile(tile: BoardPosition) {
     const position = this.board.getPossiblePosition(tile.boardX, tile.boardY);
+    const possibleMeeplePositions = Game.calculateMeeplePositions(this.currentTile);
     const newTile = {
       ...tile,
       orientation: position.possibleOrientations[0],
       tileId: this.currentTile,
       possibleOrientations: position.possibleOrientations,
+      possibleMeeplePositions,
     };
     this.currentOrientingTile = newTile;
   }
