@@ -49,14 +49,7 @@ export const Board = () => {
           orientation={tile.orientation}
         />
       ))}
-      {currentOrientingTile && (
-        <OrientingTile
-          boardX={currentOrientingTile.boardX}
-          boardY={currentOrientingTile.boardY}
-          tileId={currentOrientingTile.tileId}
-          orientation={currentOrientingTile.orientation}
-        />
-      )}
+      {currentOrientingTile && <OrientingTile tile={currentOrientingTile} />}
       {possiblePositions.map((position) => (
         <PossiblePosition
           key={`${position.boardX}-${position.boardY}`}

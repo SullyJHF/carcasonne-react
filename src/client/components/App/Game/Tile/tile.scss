@@ -24,6 +24,12 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: space-between;
+    .btn {
+      border-radius: 100%;
+      padding: $spacing-xxsmall;
+      border: none;
+      display: flex;
+    }
     .row {
       display: flex;
       justify-content: space-between;
@@ -31,26 +37,29 @@
       &.center {
         justify-content: center;
       }
-      .btn {
-        border-radius: 100%;
-        padding: $spacing-xxsmall;
-        border: none;
-        display: flex;
-        &.meeple-placement {
-          opacity: 0.777;
-          background-color: #5968ed;
-          border: 3px dotted turquoise;
-          width: $spacing-normal;
-          height: $spacing-normal;
-          &:active {
-            opacity: 1;
-          }
-        }
-      }
+
       .rotate {
         transform: rotate(45deg);
         &.left {
           transform: rotate(-45deg) rotateY(180deg);
+        }
+      }
+    }
+    .meeple-positions {
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      .meeple-placement {
+        pointer-events: all;
+        position: absolute;
+        opacity: 0.777;
+        background-color: #5968ed;
+        border: 3px dotted turquoise;
+        width: $spacing-normal;
+        height: $spacing-normal;
+        &:active {
+          opacity: 1;
         }
       }
     }

@@ -1,4 +1,5 @@
 import { Dimensions } from '../Store/TileSlice';
+import { ORIENTATION } from './../Store/TileSlice';
 
 export const intersects = (
   x1: number,
@@ -49,3 +50,7 @@ export const meepleToScreenPos = (
 export const getCentre = (x, y, w, h) => ({ x: x + w / 2, y: y + h / 2 });
 
 export const distance = (x1, y1, x2, y2) => Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+
+// This will need to change when doing more meeple positions
+export const rotateMeepleOrientation = (orientation: ORIENTATION, rotateBy: ORIENTATION) =>
+  (orientation + rotateBy) % 4;

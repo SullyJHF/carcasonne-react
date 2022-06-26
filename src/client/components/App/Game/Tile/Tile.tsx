@@ -14,7 +14,7 @@ import {
   useTileData,
 } from '../../../../Store/TileSlice';
 import { placeMeeple, useCanPlaceMeeple, useIsMyTurn } from '../../../../Store/UserSlice';
-import { orientationToStyle, posToStyle } from '../../../../utils/display';
+import { meeplePositionToStyle, orientationToStyle, posToStyle } from '../../../../utils/display';
 import { distance, getCentre, intersects, tileToScreenPos } from '../../../../utils/maths';
 import { useSocket } from '../../SocketTest/socketHooks';
 import './tile.scss';
@@ -115,7 +115,11 @@ export const PlacedTile = (props: ITile & { key: string }) => {
   );
 };
 
-export const OrientingTile = ({ tileId, boardX, boardY, orientation }: ITile) => {
+export const OrientingTile = ({
+  tile: { tileId, boardX, boardY, orientation, possibleMeeplePositions },
+}: {
+  tile: ITile;
+}) => {
   const dispatch = useAppDispatch();
   const socket = useSocket();
   const canPlaceMeeple = useCanPlaceMeeple();
@@ -138,11 +142,23 @@ export const OrientingTile = ({ tileId, boardX, boardY, orientation }: ITile) =>
             </button>
           </div>
           {canPlaceMeeple && (
-            <div className="row center">
-              <button
-                className="btn meeple-placement"
-                onClick={() => dispatch(placeMeeple(socket, { boardX, boardY }))}
-              />
+            <div className="meeple-positions">
+              {possibleMeeplePositions.roads.map((position, i) => (
+                <button
+                  key={`meeple-${i}-${position}`}
+                  className="btn meeple-placement"
+                  onClick={() => dispatch(placeMeeple(socket, { boardX, boardY }))}
+                  style={meeplePositionToStyle(position, orientation)}
+                />
+              ))}
+              {possibleMeeplePositions.cities.map((position, i) => (
+                <button
+                  key={`meeple-${i}-${position}`}
+                  className="btn meeple-placement"
+                  onClick={() => dispatch(placeMeeple(socket, { boardX, boardY }))}
+                  style={meeplePositionToStyle(position, orientation)}
+                />
+              ))}
             </div>
           )}
           <div className="row">
